@@ -1,9 +1,9 @@
-import React form 'react';
+import React from 'react';
 
-class HellowWorld extends React.Component {
-  render () {
-    return <h1>hello from {this.props.phrase}!</h1>
-  }
+class HelloWorld extends React.Component {
+    render() {
+        return <h1>Hello from {this.props.phrase}!</h1>;
+    }
 }
 
-export default HellowWorld;
+export default HelloWorld;
