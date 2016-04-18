@@ -19,13 +19,26 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoErrorsPlugin(),
+    new webpack.ProvidePlugin({
+      React: 'react',
+      ReactDOM: 'react-dom'
+    })
+
   ],
   module: {
-    loaders: [{
+    loaders: [
+    {
       test: /\.js$/,
       loaders: ['babel'],
       include: path.join(__dirname, 'src')
-    }]
+    },
+
+    {
+      test: /\.less$/,
+      loader: 'less',
+      exclude: /node_modules/
+    }
+    ]
   }
 };

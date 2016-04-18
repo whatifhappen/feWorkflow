@@ -7,7 +7,7 @@
     "clean": "rimraf dist",
     "build:webpack": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js",
     "build": "npm run clean && npm run build:webpack",
-    "start": "node devServer.js && electron main.js",
+    "start": "node devServer.js && electron .",
     "lint": "eslint src"
   },
   "repository": {},
@@ -28,22 +28,24 @@
     "babel-preset-react": "^6.3.13",
     "babel-preset-react-hmre": "^1.1.1",
     "cross-env": "^1.0.7",
+    "css-loader": "^0.23.1",
+    "electron-prebuilt": "^0.36.0",
     "eslint": "^1.10.3",
     "eslint-plugin-babel": "^3.0.0",
     "eslint-plugin-react": "^3.11.3",
     "eventsource-polyfill": "^0.9.6",
     "express": "^4.13.3",
+    "less-loader": "^2.2.3",
     "material-ui": "^0.15.0-alpha.2",
+    "react-dom": "^0.14.8",
     "rimraf": "^2.4.3",
     "webpack": "^1.12.9",
     "webpack-dev-middleware": "^1.4.0",
-    "webpack-hot-middleware": "^2.9.1",
-    "electron-prebuilt": "^0.36.0"
+    "webpack-hot-middleware": "^2.9.1"
   },
   "dependencies": {
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
     "react-redux": "^4.4.1"
   }
-
 }

@@ -53,3 +53,6 @@ app.on('activate', function () {
     createWindow();
   }
 });
+
+// const remoteBrowserWindow = electron.remote.BrowserWindow;
+// remoteBrowserWindow.addDevToolsExtension('../react-devtools/shells/chrome');

@@ -1,4 +1,3 @@
-import React from 'react';
 // import MobileTearSheet from '../../../MobileTearSheet';
 import List from 'material-ui/lib/lists/list';
 import ListItem from 'material-ui/lib/lists/list-item';
@@ -9,6 +8,10 @@ import FileFolder from 'material-ui/lib/svg-icons/file/folder';
 import ActionAssignment from 'material-ui/lib/svg-icons/action/assignment';
 import Colors from 'material-ui/lib/styles/colors';
 import EditorInsertChart from 'material-ui/lib/svg-icons/editor/insert-chart';
+import ListBtns from './ListBtns';
+
+
+const btns = ['dev', 'build', 'ftp'];
 
 const ListFolder = ({name, loc}) => (
   <div>
@@ -18,6 +21,9 @@ const ListFolder = ({name, loc}) => (
         rightIcon={<NavigationChevronRight />}
         primaryText={name}
         secondaryText={loc}
+        rightIconButton={
+          <ListBtns btns={btns} />
+        }
       />
     </List>
     <Divider inset={true} />
