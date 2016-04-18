@@ -9,9 +9,8 @@ const style = {
 const ListBtns = ({btns}) => (
   <div className="btn-group">
     {
-      btns.forEach((btn, i) => {
-        console.log('btn， i', btn, i);
-        <RaisedButton label="default" primary={false} secondary={false}  onClick={()=>alert(`Button ${i} pressed`)}/>
+      btns.map((btn, i) => {
+        <RaisedButton key={i} label={btn} primary={false} secondary={false}  onClick={()=>alert(`Button ${i} pressed`)}/>
       })
     }
   </div>

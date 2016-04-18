@@ -21,9 +21,7 @@ const ListFolder = ({name, loc}) => (
         rightIcon={<NavigationChevronRight />}
         primaryText={name}
         secondaryText={loc}
-        rightIconButton={
-          <ListBtns btns={btns} />
-        }
+        rightIconButton={ <ListBtns btns={btns} /> }
       />
     </List>
     <Divider inset={true} />
