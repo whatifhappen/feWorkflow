@@ -18,7 +18,6 @@ const ListFolder = ({name, loc}) => (
     <List Subheader="Folders" >
       <ListItem
         leftAvatar={<Avatar icon={<FileFolder />} />}
-        rightIcon={<NavigationChevronRight />}
         primaryText={name}
         secondaryText={loc}
         rightIconButton={ <ListBtns btns={btns} /> }

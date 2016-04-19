@@ -28,17 +28,24 @@ module.exports = {
   ],
   module: {
     loaders: [
-    {
-      test: /\.js$/,
-      loaders: ['babel'],
-      include: path.join(__dirname, 'src')
-    },
+      {
+        test: /\.js$/,
+        loaders: ['babel'],
+        include: path.join(__dirname, 'src'),
+        queries: {
+          plugins: ['transform-runtime'],
+          presets: ['es2015', 'stage-0', 'react'],
+        },
+        exclude: [
+          path.resolve(__dirname, 'node_modules'),
+        ],
+      },
 
-    {
-      test: /\.less$/,
-      loader: 'less',
-      exclude: /node_modules/
-    }
+      {
+        test: /\.less$/,
+        loader: 'style!css!less',
+        exclude: /node_modules/
+      }
     ]
   }
 };
