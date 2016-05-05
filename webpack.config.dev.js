@@ -1,6 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
 
+
 module.exports = {
   // or devtool: 'eval' to debug issues with compiled output:
   devtool: 'cheap-module-eval-source-map',
@@ -12,6 +13,7 @@ module.exports = {
     // your code:
     './src/index'
   ],
+  target: 'node',
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
@@ -26,19 +28,21 @@ module.exports = {
     })
 
   ],
+  // node: {
+  //   child_process: 'empty'
+  // },
   module: {
     loaders: [
       {
         test: /\.js$/,
-        loaders: ['babel'],
+        // loaders: ['babel'],
         include: path.join(__dirname, 'src'),
+        loader: require.resolve('babel-loader'),
         queries: {
           plugins: ['transform-runtime'],
-          presets: ['es2015', 'stage-0', 'react'],
+          presets: ["react", "es2015", "babel-preset-stage-0"],
         },
-        exclude: [
-          path.resolve(__dirname, 'node_modules'),
-        ],
+        exclude: /node_modules/
       },
 
       {
@@ -47,5 +51,16 @@ module.exports = {
         exclude: /node_modules/
       }
     ]
+  },
+  resolve: {
+    root: [
+      path.resolve(__dirname, 'src'),
+      path.resolve(__dirname, 'node_modules')
+    ],
+    extensions: ['', '.js', '.min.js', '.json'],
+    modulesDirectories: ['node_modules', path.resolve(__dirname, 'src'), path.resolve(__dirname, 'node_modules')]
+  },
+  resolveLoader: {
+    modulesDirectories: ['node_modules', path.join(__dirname, '../node_modules')],
   }
 };

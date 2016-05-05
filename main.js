@@ -1,6 +1,7 @@
 'use strict';
 
 const electron = require('electron');
+// const electron = window.require('electron').remote;
 // Module to control application life.
 const app = electron.app;
 // Module to create native browser window.

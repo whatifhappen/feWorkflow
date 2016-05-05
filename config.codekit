@@ -13,6 +13,17 @@
 		"outputStyle": 0,
 		"syntaxCheckerStyle": 0
 		},
+	"\/gulpfile.js": {
+		"fileType": 64,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/gulpfile.js",
+		"outputAbbreviatedPath": "\/min\/gulpfile.min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"syntaxCheckerStyle": 0
+		},
 	"\/index.html": {
 		"fileType": 8192,
 		"ignore": 0,
@@ -65,12 +76,23 @@
 		"randomFootnoteNumbers": 0,
 		"useCompatibilityMode": 0
 		},
-	"\/src\/actions\/todo.js": {
+	"\/src\/action\/action-list-btns.js": {
 		"fileType": 64,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/actions\/todo.js",
-		"outputAbbreviatedPath": "\/src\/actions\/min\/todo.min.js",
+		"inputAbbreviatedPath": "\/src\/action\/action-list-btns.js",
+		"outputAbbreviatedPath": "\/src\/action\/min\/action-list-btns.min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"syntaxCheckerStyle": 0
+		},
+	"\/src\/action\/todo.js": {
+		"fileType": 64,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/action\/todo.js",
+		"outputAbbreviatedPath": "\/src\/action\/min\/todo.min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -131,23 +153,23 @@
 		"outputStyle": 0,
 		"syntaxCheckerStyle": 0
 		},
+	"\/src\/components\/list\/list-btns.js": {
+		"fileType": 64,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/components\/list\/list-btns.js",
+		"outputAbbreviatedPath": "\/src\/components\/list\/min\/list-btns.min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"syntaxCheckerStyle": 0
+		},
 	"\/src\/components\/list\/List.js": {
 		"fileType": 64,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/src\/components\/list\/List.js",
 		"outputAbbreviatedPath": "\/src\/components\/list\/min\/List.min.js",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"outputStyle": 0,
-		"syntaxCheckerStyle": 0
-		},
-	"\/src\/components\/list\/ListBtns.js": {
-		"fileType": 64,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/components\/list\/ListBtns.js",
-		"outputAbbreviatedPath": "\/src\/components\/list\/min\/ListBtns.min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
@@ -226,12 +248,34 @@
 		"outputStyle": 0,
 		"syntaxCheckerStyle": 0
 		},
+	"\/src\/reducer\/reducer-list-btns.js": {
+		"fileType": 64,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/reducer\/reducer-list-btns.js",
+		"outputAbbreviatedPath": "\/src\/reducer\/min\/reducer-list-btns.min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"syntaxCheckerStyle": 0
+		},
 	"\/src\/reducer\/reducer.js": {
 		"fileType": 64,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/src\/reducer\/reducer.js",
 		"outputAbbreviatedPath": "\/src\/reducer\/min\/reducer.min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"syntaxCheckerStyle": 0
+		},
+	"\/src\/store\/store-list-btns.js": {
+		"fileType": 64,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/store\/store-list-btns.js",
+		"outputAbbreviatedPath": "\/src\/store\/min\/store-list-btns.min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,

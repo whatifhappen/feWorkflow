@@ -8,8 +8,7 @@ import FileFolder from 'material-ui/lib/svg-icons/file/folder';
 import ActionAssignment from 'material-ui/lib/svg-icons/action/assignment';
 import Colors from 'material-ui/lib/styles/colors';
 import EditorInsertChart from 'material-ui/lib/svg-icons/editor/insert-chart';
-import ListBtns from './ListBtns';
-
+import ListBtns from './list-btns';
 
 const btns = ['dev', 'build', 'ftp'];
 
@@ -20,7 +19,7 @@ const ListFolder = ({name, loc}) => (
         leftAvatar={<Avatar icon={<FileFolder />} />}
         primaryText={name}
         secondaryText={loc}
-        rightIconButton={ <ListBtns btns={btns} /> }
+        rightIconButton={ <ListBtns btns={btns} className="btn-group btn-group__right" /> }
       />
     </List>
     <Divider inset={true} />
