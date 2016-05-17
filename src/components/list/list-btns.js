@@ -3,9 +3,9 @@ import NavigationChevronRight from 'material-ui/lib/svg-icons/navigation/chevron
 // import actionListBtns from '../../action/action-list-btns';
 // import spawn from 'child_process';
 
-// const spawn = require('child_process').spawn;
+const spawn = require('child_process').spawn;
 // const spawn = require('electron-spawn')
-import spawn from 'electron-spawn';
+// import spawn from 'electron-spawn';
 
 console.log(__dirname);
 function runGulp() {
