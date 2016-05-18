@@ -1,3 +1,4 @@
-var {createStore} from 'redux';
+import { createStore } from 'redux';
+import reducer from '../reducer/reducer-list-btns';
 
-console.log(store.getState());
+export default createStore(reducer);

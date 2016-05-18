@@ -1,58 +1,63 @@
 import RaisedButton from 'material-ui/lib/raised-button';
 import NavigationChevronRight from 'material-ui/lib/svg-icons/navigation/chevron-right';
+import { cancelBuild, processing } from '../../action/action-list-btns';
+import { connect } from 'react-redux';
 // import actionListBtns from '../../action/action-list-btns';
-// import spawn from 'child_process';
+import spawn from 'child_process';
 
-const spawn = require('child_process').spawn;
+// const spawn = require('child_process').spawn;
 // const spawn = require('electron-spawn')
 // import spawn from 'electron-spawn';
 
-console.log(__dirname);
 function runGulp() {
-  var child = spawn('gulp')
+  var child = spawn('gulp');
+
   child.stderr.on('data', function (data) {
     console.log(data.toString())
-  })
+  });
   child.stdout.on('data', function (data) {
     console.log(data.toString())
-  })
+  });
 }
 
 const style = {
   margin: 4
 }
 
-class ListBtns extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+const ListBtns = ({btns, onProcess, cancelBuild}) => (
+  <div className="btn-group btn-group__right">
+    {console.log('cancelBuild', cancelBuild)}
+    {
+      btns.map((btn, i) => (
+        <RaisedButton
+          key={i}
+          label={btn.name}
+          primary={btn.process}
+          style={style}
+          onClick={()=> {
+            if (btn.process) {
+              cancelBuild(i, btn.name);
+            } else {
+              onProcess(i);
+            }
+          }}
+        />
+      ))
+     }
+  </div>
+);
 
-  state = {
-    primary: false,
-    secondary: false
-  }
-
-  render() {
-    return (
-      <div className="btn-group btn-group__right">
-        {
-          this.props.btns.map((btn, i) => (
-            <RaisedButton
-              key={i}
-              label={btn}
-              primary={this.state.primary}
-              secondary={this.state.secondary}
-              style={style}
-              onClick={()=> {
-                this.setState({primary: !this.state.primary});
-                runGulp();
-              }}
-            />
-          ))
-         }
-      </div>
-    );
+function mapStateToProps(btns) {
+  return {
+    btns
   }
 }
 
-export default ListBtns;
+function mapDispatchToProps(dispatch) {
+  return {
+    cancelBuild: (index, name) => dispatch(cancelBuild(index, name)),
+    onProcess: index => dispatch(processing(index))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListBtns);

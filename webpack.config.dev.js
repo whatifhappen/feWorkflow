@@ -23,8 +23,7 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.ProvidePlugin({
-      React: 'react',
-      ReactDOM: 'react-dom'
+      React: 'react'
     })
 
   ],

@@ -1,7 +1,17 @@
-function actionListBtns(store, action, text = 'processing...') {
-  store.dispatch({
-    type: action.type,
-    text: text,
-    
-  });
+export function cancelBuild(index, name, isProcess) {
+  return {
+    index: index,
+    type: 'CANCEL_BUILD',
+    name: name,
+    process: isProcess
+  }
+}
+
+export function processing(index) {
+  return {
+    index: index,
+    type: 'PROCESSING',
+    text: '编译中...',
+    process: true
+  }
 }
