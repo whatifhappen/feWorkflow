@@ -3,7 +3,7 @@ export function cancelBuild(index, name, isProcess) {
     index: index,
     type: 'CANCEL_BUILD',
     name: name,
-    process: isProcess
+    process: false
   }
 }
 

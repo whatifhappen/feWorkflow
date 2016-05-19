@@ -26,7 +26,7 @@ const style = {
 
 const ListBtns = ({btns, onProcess, cancelBuild}) => (
   <div className="btn-group btn-group__right">
-    {console.log('cancelBuild', cancelBuild)}
+    { console.log('btns', btns)}
     {
       btns.map((btn, i) => (
         <RaisedButton
@@ -39,7 +39,7 @@ const ListBtns = ({btns, onProcess, cancelBuild}) => (
               cancelBuild(i, btn.name);
             } else {
               onProcess(i);
-            }
+            }tnp
           }}
         />
       ))
