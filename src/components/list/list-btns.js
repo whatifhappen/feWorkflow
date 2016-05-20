@@ -3,22 +3,8 @@ import NavigationChevronRight from 'material-ui/lib/svg-icons/navigation/chevron
 import { cancelBuild, processing } from '../../action/action-list-btns';
 import { connect } from 'react-redux';
 // import actionListBtns from '../../action/action-list-btns';
-import spawn from 'child_process';
 
-// const spawn = require('child_process').spawn;
-// const spawn = require('electron-spawn')
-// import spawn from 'electron-spawn';
-
-function runGulp() {
-  var child = spawn('gulp');
-
-  child.stderr.on('data', function (data) {
-    console.log(data.toString())
-  });
-  child.stdout.on('data', function (data) {
-    console.log(data.toString())
-  });
-}
+import '../../../css/style.less';
 
 const style = {
   margin: 4
@@ -26,23 +12,22 @@ const style = {
 
 const ListBtns = ({btns, onProcess, cancelBuild}) => (
   <div className="btn-group btn-group__right">
-    { console.log('btns', btns)}
     {
-      btns.map((btn, i) => (
-        <RaisedButton
+      btns.map((btn, i) => {
+        return (<RaisedButton
           key={i}
-          label={btn.name}
-          primary={btn.process}
+          label={btn.get('name')}
+          primary={btn.get('process')}
           style={style}
           onClick={()=> {
             if (btn.process) {
-              cancelBuild(i, btn.name);
+              cancelBuild(btn.get('index'), btn.get('name'), btn.get('process'));
             } else {
-              onProcess(i);
-            }tnp
+              onProcess(btn.get('index'));
+            }
           }}
-        />
-      ))
+        />)
+      })
      }
   </div>
 );
@@ -55,7 +40,7 @@ function mapStateToProps(btns) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    cancelBuild: (index, name) => dispatch(cancelBuild(index, name)),
+    cancelBuild: process => dispatch(cancelBuild(process)),
     onProcess: index => dispatch(processing(index))
   }
 }

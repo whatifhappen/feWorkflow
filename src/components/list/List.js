@@ -10,7 +10,6 @@ import Colors from 'material-ui/lib/styles/colors';
 import EditorInsertChart from 'material-ui/lib/svg-icons/editor/insert-chart';
 import ListBtns from './list-btns';
 
-const btns = ['dev', 'build', 'ftp'];
 
 const ListFolder = ({name, loc}) => (
   <div>
@@ -19,7 +18,7 @@ const ListFolder = ({name, loc}) => (
         leftAvatar={<Avatar icon={<FileFolder />} />}
         primaryText={name}
         secondaryText={loc}
-        rightIconButton={ <ListBtns btns={btns} className="btn-group btn-group__right" /> }
+        rightIconButton={ <ListBtns className="btn-group btn-group__right" /> }
       />
     </List>
     <Divider inset={true} />

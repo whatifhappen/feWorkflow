@@ -1,17 +1,31 @@
+import spawn from 'child_process';
+
 export function cancelBuild(index, name, isProcess) {
   return {
-    index: index,
+    index,
     type: 'CANCEL_BUILD',
-    name: name,
+    name,
     process: false
   }
 }
 
 export function processing(index) {
   return {
-    index: index,
+    index,
     type: 'PROCESSING',
     text: '编译中...',
     process: true
   }
+}
+
+export function runGulp(cmd) {
+  var child = spawn('gulp' + cmd);
+
+  child.stderr.on('data', function (data) {
+    console.log(data.toString())
+  });
+
+  child.stdout.on('data', function (data) {
+    console.log(data.toString())
+  });
 }
