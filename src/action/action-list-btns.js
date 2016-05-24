@@ -1,20 +1,20 @@
 import spawn from 'child_process';
 
-export function cancelBuild(index, name, isProcess) {
-  return {
-    index,
-    type: 'CANCEL_BUILD',
-    name,
-    process: false
-  }
-}
-
-export function processing(index) {
+export function processing(index, name) {
   return {
     index,
     type: 'PROCESSING',
-    text: '编译中...',
+    name,
     process: true
+  }
+}
+
+export function cancelBuild(index, text) {
+  return {
+    index,
+    type: 'CANCEL_BUILD',
+    name: text,
+    process: false
   }
 }
 

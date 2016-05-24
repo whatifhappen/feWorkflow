@@ -4,19 +4,22 @@ const initState = List([
     index: 0,
     type: 'WAIT',
     name: 'DEV',
-    process: false
+    process: false,
+    cid: null
   }),
   Map({
     index: 1,
     type: 'WAIT',
     name: 'BUILD',
-    process: false
+    process: false,
+    cid: null
   }),
   Map({
     index: 2,
     type: 'WAIT',
     name: 'FTP',
-    process: false
+    process: false,
+    cid: null
   })
 ]);
 
@@ -29,13 +32,24 @@ export default (state = initState, action) => {
     case 'PROCESSING':
       return state.map(item => {
         if (item.get('index') == action.index) {
-          return item.update('process', process => !process);
+          return item.withMutations(i => {
+            i.set('process', action.process).set('text', action.name).set('name', '编译中...');
+          });
         } else {
           return item;
         }
       });
     case 'CANCEL_BUILD':
-      return state.update(action.process, () => (!action.process));
+      console.log('state', state);
+      return state.map(item => {
+        if (item.get('index') == action.index) {
+          return item.withMutations(i => {
+            i.set('process', false).set('name', action.name);
+          });
+        } else {
+          return item;
+        }
+      });
     default:
       return state
   }

@@ -13,22 +13,22 @@ const style = {
 const ListBtns = ({btns, onProcess, cancelBuild}) => (
   <div className="btn-group btn-group__right">
     {
-      btns.map((btn, i) => {
-        return (<RaisedButton
+      btns.map((btn, i) => (
+        <RaisedButton
           key={i}
           label={btn.get('name')}
           primary={btn.get('process')}
           style={style}
-          onClick={()=> {
-            if (btn.process) {
-              cancelBuild(btn.get('index'), btn.get('name'), btn.get('process'));
+          onClick={() => {
+            if (btn.get('process')) {
+              cancelBuild(btn.get('index'), btn.get('text'));
             } else {
-              onProcess(btn.get('index'));
+              onProcess(btn.get('index'), btn.get('name'));
             }
           }}
-        />)
-      })
-     }
+        />
+      ))
+    }
   </div>
 );
 
@@ -40,8 +40,8 @@ function mapStateToProps(btns) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    cancelBuild: process => dispatch(cancelBuild(process)),
-    onProcess: index => dispatch(processing(index))
+    cancelBuild: (index, text) => dispatch(cancelBuild(index, text)),
+    onProcess: (index, name) => dispatch(processing(index, name))
   }
 }
 

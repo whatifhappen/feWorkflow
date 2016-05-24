@@ -6,7 +6,6 @@ import store from './store/store-list-btns';
 
 // render(<Dropzone type='folder' />, document.getElementById('root'));
 
-console.log('store', store.getState());
 render(
   <Provider store={store}>
     <ListFolder
