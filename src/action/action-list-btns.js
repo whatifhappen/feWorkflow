@@ -9,23 +9,12 @@ export function processing(index, name) {
   }
 }
 
-export function cancelBuild(index, text) {
+export function cancelBuild(index, text, pid) {
   return {
     index,
     type: 'CANCEL_BUILD',
     name: text,
+    pid,
     process: false
   }
-}
-
-export function runGulp(cmd) {
-  var child = spawn('gulp' + cmd);
-
-  child.stderr.on('data', function (data) {
-    console.log(data.toString())
-  });
-
-  child.stdout.on('data', function (data) {
-    console.log(data.toString())
-  });
 }

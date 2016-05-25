@@ -5,21 +5,21 @@ const initState = List([
     type: 'WAIT',
     name: 'DEV',
     process: false,
-    cid: null
+    pid: null
   }),
   Map({
     index: 1,
     type: 'WAIT',
     name: 'BUILD',
     process: false,
-    cid: null
+    pid: null
   }),
   Map({
     index: 2,
     type: 'WAIT',
     name: 'FTP',
     process: false,
-    cid: null
+    pid: null
   })
 ]);
 
@@ -33,7 +33,7 @@ export default (state = initState, action) => {
       return state.map(item => {
         if (item.get('index') == action.index) {
           return item.withMutations(i => {
-            i.set('process', action.process).set('text', action.name).set('name', '编译中...');
+            i.set('process', action.process).set('text', action.name).set('name', '编译中...').set('pid', action.pid);
           });
         } else {
           return item;

@@ -2,15 +2,34 @@ import RaisedButton from 'material-ui/lib/raised-button';
 import NavigationChevronRight from 'material-ui/lib/svg-icons/navigation/chevron-right';
 import { cancelBuild, processing } from '../../action/action-list-btns';
 import { connect } from 'react-redux';
+var spawn =  require('child_process').exec;
+var kill = require('tree-kill');
 // import actionListBtns from '../../action/action-list-btns';
-
-import '../../../css/style.less';
 
 const style = {
   margin: 4
 }
 
-const ListBtns = ({btns, onProcess, cancelBuild}) => (
+const runGulp = ({isProces, name, index, text, cancelBuild, onProcess}) => {
+  process.env.PATH = process.env.PATH + ':/usr/local/bin';
+
+
+  // var child = spawn('gulp', {env: {"ATOM_SHELL_INTERNAL_RUN_AS_NODE":"1"}});
+  var child = spawn('gulp --cwd  /Users/TEN/Sites/Code/sandbox/gulp-ui/ --require  /Users/TEN/Sites/Code/sandbox/gulp-ui/node_modules --gulpfile /Users/TEN/Sites/Code/sandbox/gulp-ui/gulpfile.js');
+  child.stderr.on('data', function (data) {
+    // cancelBuild(index, text, child.pid);
+    dispatch(cancelBuild(index, text))
+    console.log(data.toString())
+  });
+
+  child.stdout.on('data', function (data) {
+    dispatch(processing(index, name))
+    // onProcess(index, name);npm
+    console.log(data.toString())
+  });
+}
+
+const ListBtns = ({btns}) => (
   <div className="btn-group btn-group__right">
     {
       btns.map((btn, i) => (
@@ -18,12 +37,13 @@ const ListBtns = ({btns, onProcess, cancelBuild}) => (
           key={i}
           label={btn.get('name')}
           primary={btn.get('process')}
+          pid={btn.get('pid')}
           style={style}
           onClick={() => {
             if (btn.get('process')) {
-              cancelBuild(btn.get('index'), btn.get('text'));
+              kill(btn.get('pid'));
             } else {
-              onProcess(btn.get('index'), btn.get('name'));
+              runGulp(btn.get('process'), btn.get('name'), btn.get('text'));
             }
           }}
         />
@@ -45,4 +65,5 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ListBtns);
+export connect(mapStateToProps)(ListBtns);
+export connect(mapDispatchToProps)(runGulp);

@@ -3,6 +3,7 @@ import ListFolder from './components/list/List';
 // import Dropzone from './components/layout/dropzone';
 import { Provider } from 'react-redux';
 import store from './store/store-list-btns';
+import '../css/style.less';
 
 // render(<Dropzone type='folder' />, document.getElementById('root'));
 
