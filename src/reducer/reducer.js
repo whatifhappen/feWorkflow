@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import reducerListBtn from './list-btns';
-import reducerList from './list';
+import listBtns from './list-btns';
+import lists from './list';
 
 export default combineReducers({
-  reducerList,
-  reducerListBtn
+  lists,
+  listBtns
 });

@@ -7,7 +7,7 @@ import { exec } from 'child_process';
 // var spawn =  require('child_process').exec;// import actionListBtns from '../../action/action-list-btns';
 
 const style = {
-  margin: 4
+  'margin': '0 4px'
 }
 
 const ListBtns = ({btns, onProcess, cancelBuild}) => (
@@ -16,11 +16,12 @@ const ListBtns = ({btns, onProcess, cancelBuild}) => (
       btns.map((btn, i) => (
         <RaisedButton
           key={i}
+          className="btn"
+          style={style}
           label={btn.get('name')}
           primary={btn.get('process')}
           primary={btn.get('fail')}
           pid={btn.get('pid')}
-          style={style}
           onClick={() => {
             if (btn.get('process')) {
               kill(btn.get('pid'));
@@ -52,9 +53,9 @@ const ListBtns = ({btns, onProcess, cancelBuild}) => (
   </div>
 );
 
-function mapStateToProps(btns) {
+function mapStateToProps(states) {
   return {
-    btns
+    btns: states.listBtns
   }
 }
 

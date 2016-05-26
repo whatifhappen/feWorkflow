@@ -4,15 +4,15 @@ const initState = List([
   Map({
     index: 0,
     type: '',
-    name: '',
-    location: ''
+    name: 'FolderName',
+    location: 'FolderLocation'
   })
 ]);
 
 export default (state = initState, action) => {
   switch (action.type) {
-    case 'ADD_LIST_ITEM':
-      return state.push(Maps({
+    case 'ADD_LIST':
+      return state.push(Map({
         index: action.index,
         name: action.name,
         location: action.location

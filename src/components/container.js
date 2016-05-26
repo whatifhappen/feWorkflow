@@ -1,11 +1,10 @@
 import ListFolder from './list/list';
+import Dropzone from './layout/dropzone';
 
-const Container = ({name, loc}) => (
-  <div>
-    <ListFolder
-      name={name}
-      loc={loc}
-    />
+const Container = () => (
+  <div className="container">
+    <ListFolder />
+    <Dropzone />
   </div>
 );
 

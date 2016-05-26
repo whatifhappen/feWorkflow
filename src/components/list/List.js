@@ -9,21 +9,41 @@ import ActionAssignment from 'material-ui/lib/svg-icons/action/assignment';
 import Colors from 'material-ui/lib/styles/colors';
 import EditorInsertChart from 'material-ui/lib/svg-icons/editor/insert-chart';
 import ListBtns from './list-btns';
+import { parsePath } from '../parsePath';
 import { addList } from '../../action/list';
+import { connect } from 'react-redux';
 
 
-const ListFolder = ({name, loc}) => (
+const ListFolder = ({lists, addList}) => (
   <div>
     <List Subheader="Folders" >
-      <ListItem
-        leftAvatar={<Avatar icon={<FileFolder />} />}
-        primaryText={name}
-        secondaryText={loc}
-        rightIconButton={ <ListBtns className="btn-group btn-group__right" /> }
-      />
+      {
+        lists.map((list, index) => (
+          <ListItem
+            key={index}
+            leftAvatar={<Avatar icon={<FileFolder />} />}
+            primaryText={list.get('name')}
+            secondaryText={list.get('location')}
+            rightIconButton={ <ListBtns className="btn-group btn-group__right" /> }
+          />
+        ))
+      }
     </List>
     <Divider inset={true} />
   </div>
 );
 
-export default ListFolder;
+function mapStateToProps(states) {
+  return {
+    lists: states.lists
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    addList: (index, name, location) => dispatch(addList(index, name, location))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListFolder);
+

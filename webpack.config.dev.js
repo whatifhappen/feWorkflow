@@ -24,7 +24,8 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.ProvidePlugin({
-      React: 'react'
+      React: 'react',
+      electron: 'electron'
     })
 
   ],
@@ -62,5 +63,18 @@ module.exports = {
   },
   resolveLoader: {
     modulesDirectories: ['node_modules', path.join(__dirname, '../node_modules')],
-  }
+  },
+  externals: [
+      (function () {
+        var IGNORES = [
+          'electron'
+        ];
+        return function (context, request, callback) {
+          if (IGNORES.indexOf(request) >= 0) {
+            return callback(null, "require('" + request + "')");
+          }
+          return callback();
+        };
+      })()
+    ]
 };
