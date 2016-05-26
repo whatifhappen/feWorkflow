@@ -4,28 +4,31 @@ const initState = List([
     index: 0,
     type: 'WAIT',
     name: 'DEV',
+    cmd: 'dev',
     process: false,
+    fail: false,
     pid: null
   }),
   Map({
     index: 1,
     type: 'WAIT',
     name: 'BUILD',
+    cmd: '',
     process: false,
+    fail: false,
     pid: null
   }),
   Map({
     index: 2,
     type: 'WAIT',
     name: 'FTP',
+    cmd: 'ftp',
     process: false,
+    fail: false,
     pid: null
   })
 ]);
 
-const initGulpCommand = List([
-
-]);
 
 export default (state = initState, action) => {
   switch(action.type) {
@@ -44,11 +47,15 @@ export default (state = initState, action) => {
         }
       });
     case 'CANCEL_BUILD':
-      console.log('state', state);
       return state.map(item => {
         if (item.get('index') == action.index) {
           return item.withMutations(i => {
-            i.set('process', false).set('name', action.name);
+            i
+              .set('process', action.process)
+              .set('name', action.text)
+              .set('text', '编译中...')
+              .set('fail', action.fail)
+              .set('pid', action.pid);
           });
         } else {
           return item;
@@ -58,14 +65,3 @@ export default (state = initState, action) => {
       return state
   }
 }
-//
-// const runGulp = (state = initGulpCommand) => {
-//   switch (action.type) {
-//     case 'PROGRESSING':
-//       return state;
-//     default:
-//       return state;
-//   }
-// }
-
-// combineReducer(runGulp, )

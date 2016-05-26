@@ -9,6 +9,7 @@ import ActionAssignment from 'material-ui/lib/svg-icons/action/assignment';
 import Colors from 'material-ui/lib/styles/colors';
 import EditorInsertChart from 'material-ui/lib/svg-icons/editor/insert-chart';
 import ListBtns from './list-btns';
+import { addList } from '../../action/list';
 
 
 const ListFolder = ({name, loc}) => (
