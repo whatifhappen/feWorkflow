@@ -1,8 +1,7 @@
-export function addList (index, name, loc) {
+export function addList (name, location) {
   return {
-    index,
     type: 'ADD_LIST',
     name,
-    loc
+    location
   }
 }

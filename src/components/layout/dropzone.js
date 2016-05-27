@@ -1,5 +1,11 @@
-import { shell } from 'electron';
+import { ipcRenderer } from 'electron';
 import os from 'os';
+import RaisedButton from 'material-ui/lib/raised-button';
+import { connect } from 'react-redux';
+
+ipcRenderer.on('selectedDirectory', function (event, path) {
+  document.getElementById('selected-file').innerHTML = `You selected: ${path}`
+})
 
 const Dropzone = ({type, onDragover, onDragleave, onDrop}) => {
   <div
@@ -12,8 +18,8 @@ const Dropzone = ({type, onDragover, onDragleave, onDrop}) => {
   >
     <RaisedButton
       label="Default"
-      id="fileManagerBtn"
-      onClick={shell.showItemInFolder(os.homedir())}
+      id="selectedDirectory"
+      onClick={() => {ipcRenderer.send('open-file-dialog')}}
     />
   </div>
 }

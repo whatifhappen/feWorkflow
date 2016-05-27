@@ -15,7 +15,7 @@ import { connect } from 'react-redux';
 
 
 const ListFolder = ({lists, addList}) => (
-  <div>
+  <div className="list-folder">
     <List Subheader="Folders" >
       {
         lists.map((list, index) => (
@@ -46,4 +46,3 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListFolder);
-
