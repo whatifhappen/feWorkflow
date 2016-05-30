@@ -6,33 +6,27 @@ export function addList (name, location) {
   }
 }
 
-export function processing(index, name, pid, data) {
+export function processing(id, index, name, pid, data) {
   return {
-    btns: [
-      {
-        index,
-        type: 'PROCESSING',
-        name,
-        pid,
-        process: true,
-        data
-      }
-    ]
-  }
+    id,
+    index,
+    type: 'PROCESSING',
+    name,
+    pid,
+    process: true,
+    data
+  };
 }
 
-export function cancelBuild(index, text, pid, data, fail) {
+export function cancelBuild(id, index, text, pid, data, fail) {
   return {
-    btns: [
-      {
-        index,
-        type: 'CANCEL_BUILD',
-        text,
-        pid: '',
-        process: false,
-        fail,
-        data
-      }
-    ]
+    id,
+    index,
+    type: 'CANCEL_BUILD',
+    text,
+    pid: '',
+    process: false,
+    fail,
+    data
   }
 }

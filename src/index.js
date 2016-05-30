@@ -6,8 +6,10 @@ import '../css/style.less';
 
 console.log('store', store.getState());
 render(
-  <Provider store={store}>
-    <Container />
-  </Provider>,
+  <div>
+    <Provider store={store}>
+      <Container />
+    </Provider>
+  </div>,
   document.getElementById('container')
 );

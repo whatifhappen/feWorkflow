@@ -29,7 +29,6 @@ const initState = List([
   })
 ]);
 
-
 export default (state = initState, action) => {
   switch(action.type) {
     case 'PROCESSING':

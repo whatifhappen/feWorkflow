@@ -24,7 +24,7 @@ const ListFolder = ({lists, addList}) => (
             leftAvatar={<Avatar icon={<FileFolder />} />}
             primaryText={list.get('name')}
             secondaryText={list.get('location')}
-            rightIconButton={ <ListBtns className="btn-group btn-group__right" /> }
+            rightIconButton={ <ListBtns btns={list.get('btns')} listId={list.get('id')} className="btn-group btn-group__right" /> }
           />
         ))
       }

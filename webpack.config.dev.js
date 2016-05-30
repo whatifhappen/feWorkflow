@@ -1,6 +1,9 @@
 var path = require('path');
 var webpack = require('webpack');
 
+var devFlagPlugin = new webpack.DefinePlugin({
+  __DEV__: JSON.stringify(JSON.parse(process.env.DEBUG || 'false'))
+});
 
 module.exports = {
   // or devtool: 'eval' to debug issues with compiled output:
@@ -26,8 +29,8 @@ module.exports = {
     new webpack.ProvidePlugin({
       React: 'react',
       electron: 'electron'
-    })
-
+    }),
+    devFlagPlugin
   ],
   // node: {
   //   child_process: 'empty'

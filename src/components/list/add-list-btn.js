@@ -8,7 +8,8 @@ import { remote } from 'electron';
 const { dialog } = remote;
 
 const style = {
-  marginLeft: 20,
+  marginRight: 25,
+  float: 'right'
 };
 
 // ipc.on('open-file-dialog', function (event) {
@@ -18,6 +19,7 @@ const style = {
 //     if (files) event.sender.send('selected-directory', files)
 //   })
 // })
+
 
 const AddListBtn = ({ lists, addList }) => (
   <FloatingActionButton
