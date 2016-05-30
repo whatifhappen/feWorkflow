@@ -54,8 +54,11 @@ const ListBtns = ({btns, onProcess, cancelBuild}) => (
 );
 
 function mapStateToProps(states) {
+  console.log('states.lists.btns', states.lists.btns);
+  console.log('states.lists', states.lists);
+
   return {
-    btns: states.listBtns
+    btns: states.lists
   }
 }
 
