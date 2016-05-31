@@ -6,12 +6,12 @@ export function addList (name, location) {
   }
 }
 
-export function processing(id, index, name, pid, data) {
+export function processing(id, index, btnName, pid, data) {
   return {
     id,
     index,
     type: 'PROCESSING',
-    name,
+    btnName,
     pid,
     process: true,
     data

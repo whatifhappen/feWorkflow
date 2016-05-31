@@ -16,13 +16,14 @@ const cwd = remote.app.getAppPath();
 
 const ListBtns = ({btns, listId, onProcess, cancelBuild}) => (
   <div className="btn-group btn-group__right">
+    {console.log('btns', btns.toJS())}
     {
       btns.map((btn, i) => (
         <RaisedButton
           key={i}
           className="btn"
           style={style}
-          label={btn.get('name')}
+          label={btn.get('btnName')}
           primary={btn.get('process')}
           primary={btn.get('fail')}
           pid={btn.get('pid')}

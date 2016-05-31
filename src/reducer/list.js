@@ -4,7 +4,7 @@ const btnsList = List([
   Map({
     index: 0,
     type: 'WAIT',
-    name: 'DEV',
+    btnName: 'DEV',
     cmd: 'dev',
     process: false,
     fail: false,
@@ -13,7 +13,7 @@ const btnsList = List([
   Map({
     index: 1,
     type: 'WAIT',
-    name: 'BUILD',
+    btnName: 'BUILD',
     cmd: '',
     process: false,
     fail: false,
@@ -22,7 +22,7 @@ const btnsList = List([
   Map({
     index: 2,
     type: 'WAIT',
-    name: 'FTP',
+    btnName: 'FTP',
     cmd: 'ftp',
     process: false,
     fail: false,
@@ -56,11 +56,12 @@ export default (state = initState, action) => {
     case 'PROCESSING':
       return state.map(item => {
         if (item.get('id') == action.id) {
-          return item.getIn(['btns', action.index]).withMutations(i => {
+          return item.setIn(['btns', action.index]).withMutations(i => {
+            console.log('i', i.toJS());
             i
               .set('process', action.process)
               .set('text', action.name)
-              .set('name', '编译中...')
+              .set('btnName', '编译中...')
               .set('pid', action.pid);
           });
         } else {
@@ -74,7 +75,7 @@ export default (state = initState, action) => {
           return item.getIn(['btns', action.index]).withMutations(i => {
               i
                 .set('process', action.process)
-                .set('name', action.text)
+                .set('btnName', action.text)
                 .set('text', '编译中...')
                 .set('fail', action.fail)
                 .set('pid', action.pid);
