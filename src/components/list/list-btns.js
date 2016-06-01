@@ -6,33 +6,35 @@ import { connect } from 'react-redux';
 import kill from 'tree-kill';
 import { exec } from 'child_process';
 import { remote } from 'electron';
+import { curPath } from './add-list-btn';
 // var spawn =  require('child_process').exec;// import actionListBtns from '../../action/action-list-btns';
 
 const style = {
   'margin': '0 4px'
 }
 
+
 const cwd = remote.app.getAppPath();
 
-const ListBtns = ({btns, listId, onProcess, cancelBuild}) => (
+const ListBtns = ({btns, listId, listLocation, onProcess, cancelBuild}) => (
   <div className="btn-group btn-group__right">
-    {console.log('btns', btns.toJS())}
     {
       btns.map((btn, i) => (
         <RaisedButton
           key={i}
           className="btn"
           style={style}
-          label={btn.get('btnName')}
+          label={btn.get('name')}
           primary={btn.get('process')}
           primary={btn.get('fail')}
           pid={btn.get('pid')}
           onClick={() => {
+            process.env.PATH = process.env.PATH + ':/usr/local/bin';
+
             if (btn.get('process')) {
               kill(btn.get('pid'));
             } else {
-              process.env.PATH = process.env.PATH + ':/usr/local/bin';
-              var child = exec('gulp --cwd ' + cwd + ' --require ' + cwd + ' --gulpfile ' + cwd + '/gulpfile.js');
+              let child = exec(`gulp ${btn.get('cmd')} --cwd ${listLocation} ${btn.get('flag')} --gulpfile ${cwd}/gulpfile.js`);
 
               child.stderr.on('data', function (data) {
                 console.error('exec error: ' + data.toString() + '\n编译中止');
@@ -59,11 +61,8 @@ const ListBtns = ({btns, listId, onProcess, cancelBuild}) => (
 );
 
 // function mapStateToProps(states) {
-//   console.log('states.lists.btns', states.listBtns.toJS());
-//   console.log('states.lists', states.lists.toJS());
-//
 //   return {
-//     btns: states.listBtns
+//     lists: states.lists
 //   }
 // }
 

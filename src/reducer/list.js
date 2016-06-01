@@ -4,8 +4,9 @@ const btnsList = List([
   Map({
     index: 0,
     type: 'WAIT',
-    btnName: 'DEV',
+    name: 'DEV',
     cmd: 'dev',
+    flag: '--development',
     process: false,
     fail: false,
     pid: null
@@ -13,8 +14,9 @@ const btnsList = List([
   Map({
     index: 1,
     type: 'WAIT',
-    btnName: 'BUILD',
+    name: 'BUILD',
     cmd: '',
+    flag: '--production',
     process: false,
     fail: false,
     pid: null
@@ -22,23 +24,16 @@ const btnsList = List([
   Map({
     index: 2,
     type: 'WAIT',
-    btnName: 'FTP',
+    name: 'FTP',
     cmd: 'ftp',
+    flag: '',
     process: false,
     fail: false,
     pid: null
   })
 ]);
 
-const initState = List([
-  Map({
-    id: 1,
-    type: '',
-    name: 'FolderName',
-    location: 'FolderLocation',
-    btns: btnsList
-  })
-]);
+const initState = List([]);
 
 export default (state = initState, action) => {
   switch (action.type) {
@@ -49,6 +44,7 @@ export default (state = initState, action) => {
           id: newId,
           name: action.name,
           location: action.location,
+          status: '',
           btns: btnsList
         }
       ));
@@ -56,14 +52,17 @@ export default (state = initState, action) => {
     case 'PROCESSING':
       return state.map(item => {
         if (item.get('id') == action.id) {
-          return item.setIn(['btns', action.index]).withMutations(i => {
-            console.log('i', i.toJS());
+          let curBtns = item.get('btns').filter(btn => btn.get('index') == action.btns.index);
+
+          return item.withMutations(i => {
             i
-              .set('process', action.process)
-              .set('text', action.name)
-              .set('btnName', '编译中...')
-              .set('pid', action.pid);
-          });
+              .set('status', action.btns.cmd)
+              .setIn(['btns', action.btns.index, 'text'], action.btns.name)
+              .setIn(['btns', action.btns.index, 'name'], '编译中...')
+              .setIn(['btns', action.btns.index, 'process'], action.btns.process)
+              .setIn(['btns', action.btns.index, 'pid'], action.btns.pid);
+          })
+
         } else {
           return item;
         }
@@ -72,18 +71,19 @@ export default (state = initState, action) => {
     case 'CANCEL_BUILD':
       return state.map(item => {
         if (item.get('id') == action.id) {
-          return item.getIn(['btns', action.index]).withMutations(i => {
-              i
-                .set('process', action.process)
-                .set('btnName', action.text)
-                .set('text', '编译中...')
-                .set('fail', action.fail)
-                .set('pid', action.pid);
-            });
-          } else {
-            return item;
-          }
-        });
+          return item.withMutations(i => {
+            i
+              .setIn(['btns', action.btns.index, 'process'], action.btns.process)
+              .setIn(['btns', action.btns.index, 'name'], action.btns.text)
+              .setIn(['btns', action.btns.index, 'text'], '编译中...')
+              .setIn(['btns', action.btns.index, 'fail'], action.btns.fail)
+              .setIn(['btns', action.btns.index, 'pid'], action.btns.pid);
+          })
+
+        } else {
+          return item;
+        }
+      });
 
     default:
       return state;

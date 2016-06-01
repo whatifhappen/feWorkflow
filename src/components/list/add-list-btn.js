@@ -4,6 +4,8 @@ import ListFolder from './list';
 import { addList } from '../../action/list';
 import { connect } from 'react-redux';
 import { remote } from 'electron';
+import fs from 'fs';
+import { parsePath } from '../parsePath';
 // import { ipcRenderer as ipc, dialog, BrowserWindow }  from 'electron';
 const { dialog } = remote;
 
@@ -12,30 +14,32 @@ const style = {
   float: 'right'
 };
 
-// ipc.on('open-file-dialog', function (event) {
-//   dialog.showOpenDialog({
-//     properties: ['openFile', 'openDirectory']
-//   }, function (files) {
-//     if (files) event.sender.send('selected-directory', files)
-//   })
-// })
+let _path;
 
 
 const AddListBtn = ({ lists, addList }) => (
   <FloatingActionButton
     style={style}
-    id="selected-directory"
     onClick={(event) => {
-      // console.log('ipc', ipc);
-      // ipc.send('open-file-dialog');
-
-      addList('test', 'testLocation');
       dialog.showOpenDialog({
-        properties: ['openFile', 'openDirectory', 'multiSelections']
+        properties: ['openFile', 'openDirectory', 'multiSelections'],
+        filters: [
+          {name: 'Images', extensions: ['jpg', 'png', 'gif']},
+          {name: 'Html', extensions: ['html', 'php']},
+          {name: 'css', extensions: ['css', 'less', 'sass', 'scss']},
+          {name: 'js', extensions: ['js', 'jsx']},
+          {name: 'All Files', extensions: ['*']}
+        ]
+      }, fileNames => {
+        if (fileNames === undefined) return;
+
+        _path = parsePath(fileNames[0]);
+        console.log('fileNames', fileNames);
+
+        addList(_path.folderName, _path.src);
+
+        return false;
       });
-      // ipc.on('selected-directory', function (event, path) {
-      //   document.getElementById('selected-file').innerHTML = `You selected: ${path}`
-      // })
     }}
   >
     <ContentAdd />
@@ -54,4 +58,6 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
+console.log('_path', _path);
+export const curPath = _path;
 export default connect(mapStateToProps, mapDispatchToProps)(AddListBtn);
