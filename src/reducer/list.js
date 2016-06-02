@@ -1,10 +1,11 @@
 import { List, Map } from 'immutable';
+import CircularProgress from 'material-ui/lib/circular-progress';
 
 const btnsList = List([
   Map({
     index: 0,
     type: 'WAIT',
-    name: 'DEV',
+    name: '开发',
     cmd: 'dev',
     flag: '--development',
     process: false,
@@ -14,7 +15,7 @@ const btnsList = List([
   Map({
     index: 1,
     type: 'WAIT',
-    name: 'BUILD',
+    name: '压缩',
     cmd: '',
     flag: '--production',
     process: false,
@@ -57,9 +58,27 @@ export default (state = initState, action) => {
           return item.withMutations(i => {
             i
               .set('status', action.btns.cmd)
+              .set('snackbar', action.snackbar)
               .setIn(['btns', action.btns.index, 'text'], action.btns.name)
               .setIn(['btns', action.btns.index, 'name'], '编译中...')
               .setIn(['btns', action.btns.index, 'process'], action.btns.process)
+              .setIn(['btns', action.btns.index, 'pid'], action.btns.pid);
+          });
+
+        } else {
+          return item;
+        }
+      });
+
+    case 'CANCEL_BUILD':
+      return state.map(item => {
+        if (item.get('id') == action.id) {
+          return item.withMutations(i => {
+            i
+              .setIn(['btns', action.btns.index, 'process'], action.btns.process)
+              .setIn(['btns', action.btns.index, 'name'], action.btns.text)
+              .setIn(['btns', action.btns.index, 'text'], '编译中...')
+              .setIn(['btns', action.btns.index, 'fail'], action.btns.fail)
               .setIn(['btns', action.btns.index, 'pid'], action.btns.pid);
           })
 
@@ -84,6 +103,15 @@ export default (state = initState, action) => {
           return item;
         }
       });
+
+    case 'TOGGLE_SNACKBAR':
+      return state.map(item => {
+        if (item.get('id') == action.id) {
+          return item.set('snackbar', action.snackbar);
+        } else {
+          return item;
+        }
+      })
 
     default:
       return state;

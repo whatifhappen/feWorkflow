@@ -53,7 +53,6 @@ export function parsePath (curPath, development = false) {
   if (detectSrcFolder(curPath) || reg(loc.src + '|' + loc.dev + '|' + loc.dist).test(curPath)) {
     isLottery = reg('lottery\\1v3\\1').test(curPath);
     lotteryPath = isLottery ? curPath.match(reg('(wx|m(qq)?)\\1?')) : '';
-    console.log('reg', reg(loc.src + '|' + loc.dev + '|' + loc.dist));
     workingDir = curPath.replace(reg(loc.src + '|' + loc.dev + '|' + loc.dist, true), '');
     src = workingDir + '/' + loc.src + lotteryPath;
     dist = workingDir + (development == 'dev' ? '/' + loc.dev : '/' + loc.dist) + lotteryPath;
@@ -62,10 +61,6 @@ export function parsePath (curPath, development = false) {
     src = workingDir;
     dist = workingDir + '/dist';
   }
-
-  console.log('workingDir', workingDir);
-  console.log('src', src);
-  console.log('dist', dist);
 
   return {
     folderName: getFolderName(workingDir),

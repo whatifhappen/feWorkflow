@@ -13,13 +13,17 @@ import { parsePath } from '../parsePath';
 import { addList } from '../../action/list';
 import { connect } from 'react-redux';
 
+let onTestStyle = {
+  marginRight: 300
+}
 
 const ListFolder = ({lists, addList}) => (
-  <div className="list-folder">
+  <div className="list-folder" style={onTestStyle}>
     <List Subheader="Folders" >
       {
         lists.map((list, index) => (
           <ListItem
+            className="list-item"
             key={index}
             leftAvatar={<Avatar icon={<FileFolder />} />}
             primaryText={list.get('name')}
@@ -29,6 +33,7 @@ const ListFolder = ({lists, addList}) => (
                 btns={list.get('btns')}
                 listId={list.get('id')}
                 listLocation={list.get('location')}
+                snackbar={list.get('snackbar')}
                 className="btn-group btn-group__right"
               />
             }

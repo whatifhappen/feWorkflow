@@ -14,9 +14,6 @@ const style = {
   float: 'right'
 };
 
-let _path;
-
-
 const AddListBtn = ({ lists, addList }) => (
   <FloatingActionButton
     style={style}
@@ -33,10 +30,8 @@ const AddListBtn = ({ lists, addList }) => (
       }, fileNames => {
         if (fileNames === undefined) return;
 
-        _path = parsePath(fileNames[0]);
-        console.log('fileNames', fileNames);
-
-        addList(_path.folderName, _path.src);
+        let curPath = parsePath(fileNames[0]);
+        addList(curPath.folderName, curPath.src);
 
         return false;
       });
@@ -58,6 +53,4 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-console.log('_path', _path);
-export const curPath = _path;
 export default connect(mapStateToProps, mapDispatchToProps)(AddListBtn);
