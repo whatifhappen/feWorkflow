@@ -1,27 +1,36 @@
-import { ipcRenderer } from 'electron';
-import os from 'os';
-import RaisedButton from 'material-ui/lib/raised-button';
 import { connect } from 'react-redux';
+import { addList } from '../../action/list';
+import { onDragover, onDragleave, onDrop } from '../../action/dropzone';
+import { handleDragFiles } from '../handleDragfile';
+import fs from 'fs';
 
-ipcRenderer.on('selectedDirectory', function (event, path) {
-  document.getElementById('selected-file').innerHTML = `You selected: ${path}`
-})
-
-const Dropzone = ({type, onDragover, onDragleave, onDrop}) => {
+const Dropzone = ({lists, onDragover, onDragleave, onDrop}) => (
   <div
     class="dropzone"
     id="dropzone"
-    data-type={type}
-    ondragover={onDragover}
-    ondragleave={onDragleave}
-    ondrop={onDrop}
+    ondragover={() => onDragover()}
+    ondragleave={() => onDragleave()}
+    ondrop={(obj, e) => {
+      handleDragFiles(obj, e)
+      return false;
+    }}
   >
-    <RaisedButton
-      label="Default"
-      id="selectedDirectory"
-      onClick={() => {ipcRenderer.send('open-file-dialog')}}
-    />
   </div>
+)
+
+function mapStateToProps(states) {
+  return {
+    lists: states.lists
+  }
 }
 
-export default Dropzone;
+function mapDispatchToProps(dispatch) {
+  return {
+    addList: (index, name, location) => dispatch(addList(index, name, location)),
+    onDragover: () => dispatch(onDragover()),
+    onDragleave: () => dispatch(onDragleave()),
+    onDrop: () => dispatch(onDrop())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dropzone);

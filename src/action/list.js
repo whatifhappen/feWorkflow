@@ -36,13 +36,3 @@ export function cancelBuild(id, index, text, pid, data, fail) {
     }
   }
 }
-
-export function toggleSnackbar(id, title, msg, snackbar) {
-  return {
-    id,
-    title,
-    msg,
-    snackbar,
-    type: 'TOGGLE_SNACKBAR',
-  }
-}

@@ -4,33 +4,41 @@ import AddListBtn from './list/add-list-btn';
 import ContainerFt from './layout/container-ft';
 import { connect } from 'react-redux';
 
-const Container = ({items, ondragover, ondrop, ondragleave}) => (
-  <div
-    className="container-bd"
-    ondragover={() => {
-      console.log('this', this);
-      ondragover();
-    }}
-    ondrop={ondrop}
-    ondragleave={ondragleave}
-  >
-    <ListFolder />
-    {/*<Dropzone />*/}
-    <ContainerFt />
-  </div>
-);
+const Container = ({container, lists, ondragover, ondrop, ondragleave}) => {
+    if (!lists.size) {
+      console.log('there\'s no list')
+      return (
+        <div>
+          <Dropzone />
+          <containerFt />
+        </div>
+      )
+    } else {
+      return (
+        <div className="container-bd">
+
+          <ListFolder />
+
+          {/*<Dropzone />*/}
+          <ContainerFt />
+        </div>
+      )
+    }
+
+};
 
 function mapStateToProps(states) {
   return {
-    items: states.container
+    container: states.container,
+    lists: states.lists
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    onDragover: () => { dispatch(onDragover()) },
-    onDragleave: () => { dispatch(onDragleave()) },
-    onDrop: () => { dispatch(onDrop()) },
+    onDragover: () => dispatch(onDragover()),
+    onDragleave: () => dispatch(onDragleave()),
+    onDrop: () => dispatch(onDrop())
   }
 }
 

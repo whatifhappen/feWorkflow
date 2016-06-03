@@ -1,7 +1,8 @@
+import { parsePath } from './parsePath';
+
 export function handleDragFiles (obj, e) {
   var isDragOver = obj.tagName == 'INPUT' ? 0 : 1,
     files = isDragOver ? e.dataTransfer.files : e.target.files,
-    dropzoneType = dropzone.getAttribute('data-type'),
     output = [];
 
   dropzone.classList.remove('on-drop-zone');
@@ -14,10 +15,8 @@ export function handleDragFiles (obj, e) {
     }
 
     if (f.type.match(dropzoneType) || f.name.match(dropzoneType)) {
-      if (dropzoneType != 'folder' && dropzoneType != 'image') {
-        list.classList.remove('thumb-list');
-        output.push('<li data-path="', f.path, '"><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ', '<p>path: ', f.path, '</p></li>');
-      }
+      list.classList.remove('thumb-list');
+      output.push('<li data-path="', f.path, '"><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ', '<p>path: ', f.path, '</p></li>');
     }
   }
 
@@ -28,10 +27,7 @@ export function handleDragFiles (obj, e) {
   } else {
     directory.value = _parsePath.src;
   }
-  directory.parentNode.classList.add('is-dirty');
-  inputFiles.classList.remove('on-bottom');
-  closeBtn();
-
+  
   if (obj.tagName == 'DIV') {
     e.preventDefault();
     e.stopPropagation();
