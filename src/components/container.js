@@ -10,15 +10,13 @@ const Container = ({container, lists, ondragover, ondrop, ondragleave}) => {
       return (
         <div>
           <Dropzone />
-          <containerFt />
+          <ContainerFt />
         </div>
       )
     } else {
       return (
         <div className="container-bd">
-
           <ListFolder />
-
           {/*<Dropzone />*/}
           <ContainerFt />
         </div>
@@ -26,20 +24,3 @@ const Container = ({container, lists, ondragover, ondrop, ondragleave}) => {
     }
 
 };
-
-function mapStateToProps(states) {
-  return {
-    container: states.container,
-    lists: states.lists
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    onDragover: () => dispatch(onDragover()),
-    onDragleave: () => dispatch(onDragleave()),
-    onDrop: () => dispatch(onDrop())
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Container);
