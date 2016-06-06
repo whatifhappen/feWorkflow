@@ -21,3 +21,10 @@ export function onDrop() {
     show: false
   }
 }
+
+export function toggleDropzoneShow(show = false) {
+  return {
+    type: 'TOGGLE_DROPZONE_SHOW',
+    show
+  }
+}

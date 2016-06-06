@@ -3,7 +3,8 @@ import { Map } from 'immutable';
 const initState = new Map({
   dragover: false,
   dragleave: false,
-  ondrop: false
+  ondrop: false,
+  show: false
 });
 
 export default (state = initState, action) => {
@@ -14,6 +15,8 @@ export default (state = initState, action) => {
       return state.set('ondragleave', action.ondragleave)
     case 'ON_DROP':
       return state.set('ondrop', action.ondrop)
+    case 'TOGGLE_DROPZONE_SHOW':
+      return state.set('show', !action.show);
     default:
       return state;
   }

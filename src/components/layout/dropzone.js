@@ -1,15 +1,17 @@
 import { connect } from 'react-redux';
 import { addList } from '../../action/list';
-import { onDragover, onDragleave, onDrop } from '../../action/dropzone';
+import { onDragover, onDragleave, onDrop, toggleDropzoneShow } from '../../action/dropzone';
 import { handleDragFiles } from '../handleDragfile';
 import fs from 'fs';
 
 
 window.ondragover = function (e) {
+  dispatch(toggleDropzoneShow());
   e.preventDefault();
 };
 
 window.ondrop = function (e) {
+  dispatch(toggleDropzoneShow());
   handleDragFiles(e);
   e.preventDefault();
 };

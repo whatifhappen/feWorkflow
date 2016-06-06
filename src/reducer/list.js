@@ -53,8 +53,6 @@ export default (state = initState, action) => {
     case 'PROCESSING':
       return state.map(item => {
         if (item.get('id') == action.id) {
-          let curBtns = item.get('btns').filter(btn => btn.get('index') == action.btns.index);
-
           return item.withMutations(i => {
             i
               .set('status', action.btns.cmd)

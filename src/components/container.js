@@ -7,20 +7,15 @@ import { connect } from 'react-redux';
 const Container = ({container, lists, ondragover, ondrop, ondragleave}) => {
     if (!lists.size) {
       console.log('there\'s no list')
-      return (
-        <div>
-          <Dropzone />
-          <ContainerFt />
-        </div>
-      )
     } else {
-      return (
-        <div className="container-bd">
-          <ListFolder />
-          {/*<Dropzone />*/}
-          <ContainerFt />
-        </div>
-      )
     }
+
+    return (
+      <div className="container-bd">
+        <ListFolder />
+        <Dropzone />
+        <ContainerFt />
+      </div>
+    )
 
 };
