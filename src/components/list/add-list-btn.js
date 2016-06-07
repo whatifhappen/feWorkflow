@@ -4,7 +4,6 @@ import ListFolder from './list';
 import { addList } from '../../action/list';
 import { connect } from 'react-redux';
 import { remote } from 'electron';
-import fs from 'fs';
 import { parsePath } from '../parsePath';
 // import { ipcRenderer as ipc, dialog, BrowserWindow }  from 'electron';
 const { dialog } = remote;
@@ -49,7 +48,7 @@ function mapStateToProps(states) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    addList: (index, name, location) => dispatch(addList(index, name, location))
+    addList: (name, location) => dispatch(addList(name, location))
   }
 }
 

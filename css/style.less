@@ -41,22 +41,54 @@ body {
     left: 0;
     width: 100%;
     height: 70px;
+    z-index: 20;
+  }
+
+  &-empty {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: #263238;
+    color: #fff;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    .em {
+      color: #00E5FF;
+      font-weight: bold;
+    }
   }
 }
 //#container
 
+//----------  @list-folder; ----------
+.list-folder {
+  position: relative;
+  z-index: 5;
+}
+//#list-folder
+
 //----------  @dropzone ----------
 .dropzone {
   position: fixed;
-  z-index: 1;
+  z-index: 0;
   width: 100%;
   height: 100%;
+  top: 0;
+  left: 0;
+  // display: none;
 }
 
 .ondragover {
   z-index: 50;
-  background-color: rgba(0, 0, 0, .3);
-  border: 3px dashed #BBDEFB;
+  display: block;
+  background-color: rgba(55, 71, 79, .6);
+  border: 3px dashed #00B8D4;
 }
 
 //#dropzone

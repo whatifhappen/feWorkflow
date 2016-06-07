@@ -31,7 +31,7 @@ const ListBtns = ({btns, listId, listLocation, onProcess, cancelBuild, setSnackb
           pid={btn.get('pid')}
           onClick={() => {
             process.env.PATH = process.env.PATH + ':/usr/local/bin';
-            
+
             if (btn.get('process')) {
               kill(btn.get('pid'));
             } else {
