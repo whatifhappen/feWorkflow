@@ -16,8 +16,6 @@ export default (state = initState, action) => {
       return state.set('classes', action.classes)
     case 'ON_DROP':
       return state.set('classes', action.classes)
-    case 'TOGGLE_DROPZONE_SHOW':
-      return state.set('show', !action.show);
     default:
       return state;
   }

@@ -7,17 +7,25 @@ import { handleDragFiles } from './components/handleDragfile';
 import createStore from './store/store';
 import devtools from './store/devtools';
 
-const testStore = createStore();
+// const testStore = createStore();
 
-console.log('store', testStore.getState());
+// console.log('store', testStore.getState());
+// render(
+//   <div>
+//     <Provider store={testStore}>
+//       <Container />
+//     </Provider>
+
+//     {devtools(testStore)}
+//   </div>,
+//   document.getElementById('container')
+// );
+
+console.log('store', store.getState());
 render(
-  <div>
-    <Provider store={testStore}>
-      <Container />
-    </Provider>
-
-    {devtools(testStore)}
-  </div>,
+  <Provider store={store}>
+    <Container />
+  </Provider>,
   document.getElementById('container')
 );
 

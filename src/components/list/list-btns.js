@@ -7,6 +7,7 @@ import { exec } from 'child_process';
 import { remote } from 'electron';
 import { curPath } from './add-list-btn';
 import { setSnackbar } from '../../action/snackbar';
+import CircularProgress from 'material-ui/CircularProgress';
 // var spawn =  require('child_process').exec;// import actionListBtns from '../../action/action-list-btns';
 
 const { dialog } = remote;
@@ -26,8 +27,9 @@ const ListBtns = ({btns, listId, listLocation, onProcess, cancelBuild, setSnackb
           className="btn"
           style={style}
           label={ btn.get('name') }
+          labelPosition="after"
           primary={btn.get('process')}
-          primary={btn.get('fail')}
+          secondary={btn.get('fail')}
           pid={btn.get('pid')}
           onClick={() => {
             process.env.PATH = process.env.PATH + ':/usr/local/bin';

@@ -31,7 +31,7 @@ const Dropzone = ({lists, dropzone, addList, onDragover, onDragleave, onDrop}) =
     }}
     >
   </div>
-)
+);
 
 //
 // class Dropzone extends React.Component {

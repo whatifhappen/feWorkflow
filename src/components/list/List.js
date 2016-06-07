@@ -13,12 +13,8 @@ import { parsePath } from '../parsePath';
 import { addList } from '../../action/list';
 import { connect } from 'react-redux';
 
-let onTestStyle = {
-  marginRight: 300
-}
-
 const ListFolder = ({lists, addList}) => (
-  <div className="list-folder" style={onTestStyle}>
+  <div className="list-folder">
     <List Subheader="Folders" >
       {
         lists.map((list, index) => (
