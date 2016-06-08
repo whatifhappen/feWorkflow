@@ -3,11 +3,11 @@ import NavigationChevronRight from 'material-ui/lib/svg-icons/navigation/chevron
 import { processing, cancelBuild } from '../../action/list';
 import { connect } from 'react-redux';
 import kill from 'tree-kill';
-import { exec } from 'child_process';
+import { execFile, exec } from 'child_process';
 import { remote } from 'electron';
 import { curPath } from './add-list-btn';
 import { setSnackbar } from '../../action/snackbar';
-import CircularProgress from 'material-ui/CircularProgress';
+import CircularProgress from 'material-ui/lib/circular-progress';
 // var spawn =  require('child_process').exec;// import actionListBtns from '../../action/action-list-btns';
 
 const { dialog } = remote;
@@ -37,7 +37,8 @@ const ListBtns = ({btns, listId, listLocation, onProcess, cancelBuild, setSnackb
             if (btn.get('process')) {
               kill(btn.get('pid'));
             } else {
-              let child = exec(`gulp ${btn.get('cmd')} --cwd ${listLocation} ${btn.get('flag')} --gulpfile ${cwd}/gulpfile.js`);
+              let child = execFile(process.env.PATH + '/bin/gulp',  [`${btn.get('cmd')}`, '--cwd', `${listLocation}`, `${btn.get('flag')}`, '--gulpfile' , `${cwd}/gulpfile.js`]);
+              // let child = exec(`gulp ${btn.get('cmd')} --cwd ${listLocation} ${btn.get('flag')} --gulpfile ${cwd}/gulpfile.js`);
 
               child.stderr.on('data', function (data) {
                 let str = data.toString();
@@ -56,7 +57,7 @@ const ListBtns = ({btns, listId, listLocation, onProcess, cancelBuild, setSnackb
               //关闭
               child.stdout.on('close', function () {
                 cancelBuild(listId, i, btn.get('name'), child.pid, '编译结束', false);
-                setSnackbar('编译完成');
+                setSnackbar('编译结束');
 
                 console.info('编译结束');
               });

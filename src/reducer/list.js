@@ -22,16 +22,16 @@ const btnsList = List([
     fail: false,
     pid: null
   }),
-  Map({
-    index: 2,
-    type: 'WAIT',
-    name: 'FTP',
-    cmd: 'ftp',
-    flag: '',
-    process: false,
-    fail: false,
-    pid: null
-  })
+  // Map({
+  //   index: 2,
+  //   type: 'WAIT',
+  //   name: 'FTP',
+  //   cmd: 'ftp',
+  //   flag: '',
+  //   process: false,
+  //   fail: false,
+  //   pid: null
+  // })
 ]);
 
 const initState = List([]);

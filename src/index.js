@@ -3,7 +3,6 @@ import Container from './components/container';
 import { Provider } from 'react-redux';
 import store from './store/store';
 import '../css/style.less';
-import { handleDragFiles } from './components/handleDragfile';
 import createStore from './store/store';
 import devtools from './store/devtools';
 
@@ -32,7 +31,6 @@ render(
 
 const dropzone = document.getElementById('dropzone');
 
-console.log('dropzone',dropzone);
 document.addEventListener('dragover', function (event) {
   dropzone.classList.add('ondragover');
   event.preventDefault();

@@ -9,8 +9,9 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
-    publicPath: '/static/'
+    publicPath: '/dist/'
   },
+  target: 'node',
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.DefinePlugin({
@@ -22,6 +23,10 @@ module.exports = {
       compressor: {
         warnings: false
       }
+    }),
+    new webpack.ProvidePlugin({
+      React: 'react',
+      electron: 'electron'
     })
   ],
   module: {
@@ -44,5 +49,29 @@ module.exports = {
         exclude: /node_modules/
       }
     ]
-  }
+  },
+  resolve: {
+    root: [
+      path.resolve(__dirname, 'src'),
+      path.resolve(__dirname, 'node_modules')
+    ],
+    extensions: ['', '.js', '.min.js', '.json'],
+    modulesDirectories: ['node_modules', path.resolve(__dirname, 'src'), path.resolve(__dirname, 'node_modules')]
+  },
+  resolveLoader: {
+    modulesDirectories: ['node_modules', path.join(__dirname, '../node_modules')],
+  },
+  externals: [
+      (function () {
+        var IGNORES = [
+          'electron'
+        ];
+        return function (context, request, callback) {
+          if (IGNORES.indexOf(request) >= 0) {
+            return callback(null, "require('" + request + "')");
+          }
+          return callback();
+        };
+      })()
+    ]
 };

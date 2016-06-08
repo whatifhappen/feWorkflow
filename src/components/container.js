@@ -3,6 +3,7 @@ import Dropzone from './layout/dropzone';
 import ContainerEmpty from './container-empty';
 import AddListBtn from './list/add-list-btn';
 import ContainerFt from './layout/container-ft';
+import Aside from './layout/aside';
 import { connect } from 'react-redux';
 
 
@@ -13,6 +14,7 @@ const Container = ({lists}) => {
         <ContainerEmpty />
         <Dropzone />
         <ContainerFt />
+        <Aside />
       </div>
     )
   } else {
@@ -21,6 +23,7 @@ const Container = ({lists}) => {
         <ListFolder />
         <Dropzone />
         <ContainerFt />
+        <Aside />
       </div>
     )
   }
