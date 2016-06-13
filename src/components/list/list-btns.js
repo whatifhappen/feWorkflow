@@ -33,12 +33,15 @@ const ListBtns = ({btns, listId, listLocation, onProcess, cancelBuild, setSnackb
           pid={btn.get('pid')}
           onClick={() => {
             process.env.PATH = process.env.PATH + ':/usr/local/bin';
+            console.log('cwd', cwd);
 
             if (btn.get('process')) {
               kill(btn.get('pid'));
             } else {
-              let child = execFile(process.env.PATH + '/bin/gulp',  [`${btn.get('cmd')}`, '--cwd', `${listLocation}`, `${btn.get('flag')}`, '--gulpfile' , `${cwd}/gulpfile.js`]);
-              // let child = exec(`gulp ${btn.get('cmd')} --cwd ${listLocation} ${btn.get('flag')} --gulpfile ${cwd}/gulpfile.js`);
+              // let child = execFile(process.env.PATH + '/bin/gulp',  [`${btn.get('cmd')}`, '--cwd', `${listLocation}`, `${btn.get('flag')}`, '--gulpfile' , `${cwd}/gulpfile.js`]);
+              let child = exec(`gulp ${btn.get('cmd')} --cwd ${listLocation} ${btn.get('flag')} --gulpfile ${cwd}/gulpfile.js --require ${cwd}/require.js`, {
+                cwd: cwd
+              });
 
               child.stderr.on('data', function (data) {
                 let str = data.toString();
