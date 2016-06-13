@@ -23,8 +23,10 @@ function createWindow() {
   mainWindow.loadURL('file://' + __dirname + '/index.html');
   // mainWindow.loadURL('http://localhost:3333/');
 
+  console.log('.globalPaths', require('module').globalPaths);
+
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -41,7 +43,6 @@ function createWindow() {
 // initialization and is ready to create browser windows.
 app.on('ready', createWindow);
 
-console.log('cwd', app.getLocale());
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
   // On OS X it is common for applications and their menu bar

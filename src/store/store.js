@@ -3,7 +3,7 @@ import reducer from '../reducer/reducer';
 //
 // export default createStore(reducer);
 // import {compose, createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
+// import thunk from 'redux-thunk';
 // import {devTools} from 'redux-devtools';
 
 // export default function store(initialState) {
