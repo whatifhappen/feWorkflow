@@ -36,7 +36,7 @@ const ListBtns = ({btns, listId, listLocation, onProcess, cancelBuild, setSnackb
 
               //osx特性导致无法执行exec，强制写入env.path node的路径
               if (remote.process.platform == 'darwin' && !/:(\\|\/)usr\1local\1bin/g.test(remote.process.env.PATH)) {
-                remote.process.env.PATH =  + ':/usr/local/bin';
+                remote.process.env.PATH += ':/usr/local/bin';
               }
 
               let child = exec(`gulp ${btn.get('cmd')} --cwd ${listLocation} ${btn.get('flag')} --gulpfile ${cwd}/gulpfile.js`, {

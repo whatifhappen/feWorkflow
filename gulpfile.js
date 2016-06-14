@@ -58,7 +58,7 @@ console.log('dist:', dist);
 
 var paths = {
   js: (config.js && config.js.length) ? config.js : (src + '/**/*.js'),
-  images: (config.images && config.images.length) ? config.images : [src + '/**/*.+(png|jpg|gif|svg)'],
+  images: (config.images && config.images.length) ? config.images : src + '/**/*.+(png|jpg|gif|svg)',
   css: (config.css && config.css.length) ? config.css : (config.cssConcat && config.cssConcat.length) ? config.cssConcat : (src + '/**/*.css'),
   less: (config.less && config.less.length) ? config.less.concat(['!/**/import.*.less', '!/**/import_*.less']) : [src + '/**/*.less', '!/**/import.*.less', '!/**/import_*.less'],
   // less: [src + '/**/css/*.less'],
@@ -140,51 +140,50 @@ gulp.task('js-min', function () {
  * 图片压缩
  * @type {[type]}
  */
-var image = require('gulp-image');
-
-gulp.task('image', function () {
-  return gulp.src(paths.images, {
-      base: src
-    })
-    .pipe(image({
-      pngquant: true,
-      optipng: false,
-      zopflipng: true,
-      advpng: true,
-      jpegRecompress: false,
-      jpegoptim: true,
-      mozjpeg: false,
-      gifsicle: true,
-      svgo: true
-    }))
-    .pipe(gulp.dest(dist));
-});
+// var image = require('gulp-image');
+// gulp.task('image', function () {
+//   return gulp.src(paths.images, {
+//       base: src
+//     })
+//     .pipe(image({
+//       pngquant: true,
+//       optipng: false,
+//       zopflipng: true,
+//       advpng: true,
+//       jpegRecompress: false,
+//       jpegoptim: true,
+//       mozjpeg: true,
+//       gifsicle: true,
+//       svgo: true
+//     }))
+//     .pipe(gulp.dest(dist));
+// });
 
 /**
  * 图片压缩
  */
-// var imagemin = require('gulp-imagemin'),
-//   mozjpeg = require('imagemin-mozjpeg'),
-//   pngquant = require('imagemin-pngquant');
-//
-// gulp.task('images', function () {
-//   return gulp.src(paths.images, {
-//       base: src
-//     })
-//     .pipe(cached('images'))
-//     .pipe(imagemin({
-//       interlaced: true,
-//       use: [
-//         pngquant({
-//           speed: 4
-//         }),
-//     // mozjpeg({
-//     //   quality: 80
-//     // })
-//       ]
-//     }))
-//     .pipe(gulp.dest(dist));
-// });
+var imagemin = require('gulp-imagemin'),
+  // mozjpeg = require('imagemin-mozjpeg'),
+  pngquant = require('imagemin-pngquant');
+
+gulp.task('images', function () {
+  return gulp.src(paths.images, {
+      base: src
+    })
+    .pipe(cached('images'))
+    .pipe(imagemin({
+      interlaced: true,
+      use: [
+        pngquant({
+          speed: 4
+        }),
+    // mozjpeg({
+    //   quality: 80
+    // })
+      ]
+    }))
+    .pipe(gulp.dest(dist));
+});
 
 /**
  * html格式化
@@ -435,5 +434,5 @@ gulp.task('dev', function (cb) {
 
 // Build production files, the default task
 gulp.task('default', ['clean'], function (cb) {
-  runSequence(['script', 'image', 'less:build', 'fileinclude', 'prettify', 'copy:files'], 'replace', cb);
+  runSequence(['script', 'images', 'less:build', 'fileinclude', 'prettify', 'copy:files'], 'replace', cb);
 });

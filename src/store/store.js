@@ -1,5 +1,6 @@
 import { createStore } from 'redux';
 import reducer from '../reducer/reducer';
+
 //
 // export default createStore(reducer);
 // import {compose, createStore, applyMiddleware } from 'redux';
@@ -16,5 +17,6 @@ import reducer from '../reducer/reducer';
 
 //   return store(reducer, initialState);
 // }
+
 
 export default createStore(reducer);

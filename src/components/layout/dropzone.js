@@ -3,18 +3,23 @@ import { addList } from '../../action/list';
 import { onDragover, onDragleave, onDrop } from '../../action/dropzone';
 import { parsePath } from '../parsePath';
 
+let dragEnterElem;
 const Dropzone = ({lists, dropzone, addList, onDragover, onDragleave, onDrop}) => (
   <div
     className={dropzone.get('classes')}
     id="dropzone"
-    onDragOver={e => {
+    onDragEnter={e => {
+      dragEnterElem = e.target;
       onDragover();
       e.preventDefault();
       return false;
     }}
     onDragLeave={e => {
-      onDragleave();
+      if (dragEnterElem == e.target) {
+        onDragleave();
+      }
       e.preventDefault();
+      return false;
     }}
     onDrop={e => {
       let files = e.dataTransfer.files;
@@ -23,6 +28,7 @@ const Dropzone = ({lists, dropzone, addList, onDragover, onDragleave, onDrop}) =
       let currentPath = parsePath(files[0].path);
       addList(currentPath.folderName[0], currentPath.src);
       onDrop();
+      e.preventDefault();
       return false;
     }}
     >
