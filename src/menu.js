@@ -1,7 +1,7 @@
-import electron from 'electron';
-const BrowserWindow = electron.remote.BrowserWindow
-const Menu = electron.remote.Menu
-const app = electron.remote.app
+import { remote as electron} from 'electron';
+const BrowserWindow = electron.BrowserWindow;
+const Menu = electron.Menu;
+const app = electron.app;
 
 let template = [{
   label: 'Edit',
@@ -118,7 +118,7 @@ function addUpdateMenuItems (items, position) {
     visible: false,
     key: 'checkForUpdate',
     click: function () {
-      require('electron').autoUpdater.checkForUpdates()
+      electron.autoUpdater.checkForUpdates()
     }
   }, {
     label: 'Restart and Install Update',
@@ -126,7 +126,7 @@ function addUpdateMenuItems (items, position) {
     visible: false,
     key: 'restartToUpdate',
     click: function () {
-      require('electron').autoUpdater.quitAndInstall()
+      electron.autoUpdater.quitAndInstall()
     }
   }]
 
@@ -185,8 +185,14 @@ if (process.platform === 'win32') {
   addUpdateMenuItems(helpMenu, 0)
 }
 
+let count = 1;
 app.on('ready', function () {
+  if (count) {
+    BrowserWindow.getCurrentWindow().reload();
+    console.log(BrowserWindow.getCurrentWindow());
+  }
   alert('app ready');
   const menu = Menu.buildFromTemplate(template)
   Menu.setApplicationMenu(menu)
+  count = 0;
 })

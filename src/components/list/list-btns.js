@@ -2,18 +2,41 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { processing, cancelBuild } from '../../action/list';
 import { connect } from 'react-redux';
 import kill from 'tree-kill';
-import { execFile, exec } from 'child_process';
-import { remote } from 'electron';
-import { curPath } from './add-list-btn';
+import { exec } from 'child_process';
+import { app, remote } from 'electron';
 import { setSnackbar } from '../../action/snackbar';
 
 const { dialog } = remote;
 
 const style = {
-  'margin': '0 4px'
-}
+  margin: '0 4px'
+};
 
+let count = 1;
 const cwd = remote.app.getAppPath();
+console.log('remote.app', remote.app);
+console.log('app', app);
+
+remote.app.on('ready', () => {
+  console.log('app realdy in list-btn');
+  if (count) {
+    remote.getCurrentWindow().reload();
+  }
+  if (remote.process.platform == 'darwin' && !/:(\\|\/)usr\1local\1bin/g.test(remote.process.env.PATH)) {
+    remote.process.env.PATH += ':/usr/local/bin';
+  }
+  count = 0;
+})
+
+// let win = new BrowserWindow({show: false})
+// win.once('ready-to-show', () => {
+//   win.show()
+// });
+
+//osx特性导致无法执行exec，强制写入env.path node的路径
+if (remote.process.platform == 'darwin' && !/:(\\|\/)usr\1local\1bin/g.test(remote.process.env.PATH)) {
+  remote.process.env.PATH += ':/usr/local/bin';
+}
 
 const ListBtns = ({btns, listId, listLocation, onProcess, cancelBuild, setSnackbar}) => (
   <div className="btn-group btn-group__right">
@@ -33,10 +56,6 @@ const ListBtns = ({btns, listId, listLocation, onProcess, cancelBuild, setSnackb
             if (btn.get('process')) {
               kill(btn.get('pid'));
             } else {
-              //osx特性导致无法执行exec，强制写入env.path node的路径
-              if (remote.process.platform == 'darwin' && !/:(\\|\/)usr\1local\1bin/g.test(remote.process.env.PATH)) {
-                remote.process.env.PATH += ':/usr/local/bin';
-              }
 
               let child = exec(`gulp ${btn.get('cmd')} --cwd ${listLocation} ${btn.get('flag')} --gulpfile ${cwd}/gulpfile.js`,  {
                 cwd: cwd

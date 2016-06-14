@@ -1,11 +1,9 @@
 import ListFolder from './list/list';
 import Dropzone from './layout/dropzone';
 import ContainerEmpty from './container-empty';
-import AddListBtn from './list/add-list-btn';
 import ContainerFt from './layout/container-ft';
 import Aside from './layout/aside';
 import { connect } from 'react-redux';
-
 
 const Container = ({lists}) => {
   if (!lists.size) {
@@ -27,7 +25,6 @@ const Container = ({lists}) => {
       </div>
     )
   }
-
 };
 
 function mapStateToProps(states) {
