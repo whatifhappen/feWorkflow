@@ -3,13 +3,10 @@ import NavigationChevronRight from 'material-ui/lib/svg-icons/navigation/chevron
 import { processing, cancelBuild } from '../../action/list';
 import { connect } from 'react-redux';
 import kill from 'tree-kill';
-// import { execFile, exec } from 'child_process';
+import { execFile, exec } from 'child_process';
 import { remote } from 'electron';
 import { curPath } from './add-list-btn';
 import { setSnackbar } from '../../action/snackbar';
-import path from 'path';
-import { exec } from 'shelljs';
-// var spawn =  require('child_process').exec;// import actionListBtns from '../../action/action-list-btns';
 
 const { dialog } = remote;
 
@@ -33,51 +30,40 @@ const ListBtns = ({btns, listId, listLocation, onProcess, cancelBuild, setSnackb
           secondary={btn.get('fail')}
           pid={btn.get('pid')}
           onClick={() => {
-            process.env.PATH = process.env.PATH + ':/usr/local/bin:/usr/bin';
-            require('module').globalPaths.push(':/usr/local/bin:/usr/bin')
-            console.log('cwd', cwd);
-            console.log('globalPaths',require('module').globalPaths )
-            console.log('process.env.INIT_CWD',process.env.INIT_CWD)
-
             if (btn.get('process')) {
               kill(btn.get('pid'));
             } else {
-              // let child = execFile(process.env.PATH + '/bin/gulp',  [`${btn.get('cmd')}`, '--cwd', `${listLocation}`, `${btn.get('flag')}`, '--gulpfile' , `${cwd}/gulpfile.js`]);
-              // let child = exec(`gulp ${btn.get('cmd')} --cwd ${listLocation} ${btn.get('flag')} --gulpfile ${cwd}/gulpfile.js --require ${cwd}/require.js`, {
-                // cwd: cwd
-              // });
 
-              console.log('cwd', cwd);
-              console.log('process', process);
-              console.log('path', `gulp ${btn.get('cmd')} --cwd ${listLocation} ${btn.get('flag')} --gulpfile ${cwd}/gulpfile.js --require ${cwd}/node_modules`);
+              //osx特性导致无法执行exec，强制写入env.path node的路径
+              if (remote.process.platform == 'darwin' && !/:(\\|\/)usr\1local\1bin/g.test(remote.process.env.PATH)) {
+                remote.process.env.PATH =  + ':/usr/local/bin';
+              }
 
-              exec(`gulp ${btn.get('cmd')} --cwd ${listLocation} ${btn.get('flag')} --gulpfile ${cwd}/gulpfile.js --require ${cwd}/node_modules`, function(code, stdout, stderr) {
-                console.log('Exit code:', code);
-                console.log('Program output:', stdout);
-                console.log('Program stderr:', stderr);
+              let child = exec(`gulp ${btn.get('cmd')} --cwd ${listLocation} ${btn.get('flag')} --gulpfile ${cwd}/gulpfile.js`, {
+                cwd: cwd
               });
 
-              // child.stderr.on('data', function (data) {
-              //   let str = data.toString();
+              child.stderr.on('data', function (data) {
+                let str = data.toString();
 
-              //   console.error('exec error: ' + str + '\n编译中止');
-              //   kill(btn.get('pid'));
-              //   cancelBuild(listId, i, btn.get('name'), child.pid, str, true);
-              //   dialog.showErrorBox('Oops， 出错了。请稍候再试', str);
-              // });
+                console.error('exec error: ' + str + '\n编译中止');
+                kill(btn.get('pid'));
+                cancelBuild(listId, i, btn.get('name'), child.pid, str, true);
+                dialog.showErrorBox('Oops， 出错了。请稍候再试', str);
+              });
 
-              // child.stdout.on('data', function (data) {
-              //   console.log(data.toString())
-              //   onProcess(listId, i, btn.get('text'), child.pid, data.toString())
-              // });
+              child.stdout.on('data', function (data) {
+                console.log(data.toString())
+                onProcess(listId, i, btn.get('text'), child.pid, data.toString())
+              });
 
-              // //关闭
-              // child.stdout.on('close', function () {
-              //   cancelBuild(listId, i, btn.get('name'), child.pid, '编译结束', false);
-              //   setSnackbar('编译结束');
+              //关闭
+              child.stdout.on('close', function () {
+                cancelBuild(listId, i, btn.get('name'), child.pid, '编译结束', false);
+                setSnackbar('编译结束');
 
-              //   console.info('编译结束');
-              // });
+                console.info('编译结束');
+              });
             }
           }}
         />

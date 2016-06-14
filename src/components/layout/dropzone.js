@@ -9,6 +9,7 @@ const Dropzone = ({lists, dropzone, addList, onDragover, onDragleave, onDrop}) =
     id="dropzone"
     onDragOver={e => {
       onDragover();
+      e.preventDefault();
       return false;
     }}
     onDragLeave={e => {

@@ -151,7 +151,7 @@ gulp.task('image', function () {
       optipng: false,
       zopflipng: true,
       advpng: true,
-      jpegRecompress: true,
+      jpegRecompress: false,
       jpegoptim: true,
       mozjpeg: false,
       gifsicle: true,
