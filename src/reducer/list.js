@@ -1,5 +1,4 @@
 import { List, Map } from 'immutable';
-import CircularProgress from 'material-ui/lib/circular-progress';
 
 const btnsList = List([
   Map({

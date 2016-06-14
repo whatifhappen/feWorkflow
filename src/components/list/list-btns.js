@@ -1,5 +1,4 @@
-import RaisedButton from 'material-ui/lib/raised-button';
-import NavigationChevronRight from 'material-ui/lib/svg-icons/navigation/chevron-right';
+import RaisedButton from 'material-ui/RaisedButton';
 import { processing, cancelBuild } from '../../action/list';
 import { connect } from 'react-redux';
 import kill from 'tree-kill';
@@ -39,7 +38,9 @@ const ListBtns = ({btns, listId, listLocation, onProcess, cancelBuild, setSnackb
                 remote.process.env.PATH += ':/usr/local/bin';
               }
 
-              let child = exec(`gulp ${btn.get('cmd')} --cwd ${listLocation} ${btn.get('flag')} --gulpfile ${cwd}/gulpfile.js`);
+              let child = exec(`gulp ${btn.get('cmd')} --cwd ${listLocation} ${btn.get('flag')} --gulpfile ${cwd}/gulpfile.js`,  {
+                cwd: cwd
+              });
 
               child.stderr.on('data', function (data) {
                 let str = data.toString();

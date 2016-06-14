@@ -1,7 +1,7 @@
 import electron from 'electron';
-const BrowserWindow = electron.BrowserWindow
-const Menu = electron.Menu
-const app = electron.app
+const BrowserWindow = electron.remote.BrowserWindow
+const Menu = electron.remote.Menu
+const app = electron.remote.app
 
 let template = [{
   label: 'Edit',
@@ -186,6 +186,7 @@ if (process.platform === 'win32') {
 }
 
 app.on('ready', function () {
+  alert('app ready');
   const menu = Menu.buildFromTemplate(template)
   Menu.setApplicationMenu(menu)
 })

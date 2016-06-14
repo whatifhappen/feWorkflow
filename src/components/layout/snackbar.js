@@ -1,12 +1,12 @@
 import { closeSnackbar } from '../../action/snackbar';
 import { connect } from 'react-redux';
-import Snackbar from 'material-ui/lib/Snackbar';
+import Snackbar from 'material-ui/Snackbar';
 
 const SnackbarMod = ({snackbar, closeSnackbar}) => (
   <Snackbar
     open={snackbar.get('open')}
     message={snackbar.get('msg')}
-    autoHideDuration={3500}
+    autoHideDuration={3000}
     onRequestClose={() => closeSnackbar()}
   />
 );

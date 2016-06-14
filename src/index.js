@@ -3,6 +3,8 @@ import Container from './components/container';
 import { Provider } from 'react-redux';
 import store from './store/store';
 import '../css/style.less';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 // import devtools from './store/devtools';
 
 // const testStore = createStore();
@@ -20,9 +22,11 @@ import '../css/style.less';
 // );
 
 render(
-  <Provider store={store}>
-    <Container />
-  </Provider>,
+  <MuiThemeProvider muiTheme={getMuiTheme()}>
+    <Provider store={store}>
+      <Container />
+    </Provider>
+  </MuiThemeProvider>,
   document.getElementById('container')
 );
 

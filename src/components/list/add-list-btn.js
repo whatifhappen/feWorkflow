@@ -1,5 +1,5 @@
-import FloatingActionButton from 'material-ui/lib/floating-action-button';
-import ContentAdd from 'material-ui/lib/svg-icons/content/add';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 import ListFolder from './list';
 import { addList } from '../../action/list';
 import { connect } from 'react-redux';
@@ -38,6 +38,7 @@ const AddListBtn = ({ lists, addList }) => (
   >
     <ContentAdd />
   </FloatingActionButton>
+
 );
 
 function mapStateToProps(states) {
