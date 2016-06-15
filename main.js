@@ -99,8 +99,6 @@ function createMenu() {
             focusedWindow.toggleDevTools()
           }
         }
-      }, {
-        type: 'separator'
       }]
     }, {
       label: 'Window',
@@ -120,7 +118,7 @@ function createMenu() {
       submenu: [{
         label: 'Learn More',
         click: function () {
-          electron.shell.openExternal('http://electron.atom.io')
+          electron.shell.openExternal('http://whatifhappen.github.io/GulpUI-WX/')
         }
       }]
     }]

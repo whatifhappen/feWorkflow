@@ -12,15 +12,7 @@ const style = {
   margin: '0 4px'
 };
 
-let count = 1;
 const cwd = remote.app.getAppPath();
-console.log('remote.app', remote.app);
-console.log('remote.process.env.PATH', remote.process.env.PATH);
-
-remote.app.on('ready', () => {
-  remote.getCurrentWindow().reload();
-});
-
 
 const ListBtns = ({btns, listId, listLocation, onProcess, cancelBuild, setSnackbar}) => (
   <div className="btn-group btn-group__right">
