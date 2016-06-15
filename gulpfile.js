@@ -42,7 +42,7 @@ var reg = function (str) {
 
 if (reg(loc.src + '|' + loc.dev + '|' + loc.dist).test(cwd)) {
   isLottery = /(\/|\\)lottery\1v3\1/gm.test(cwd);
-  lotteryPath = isLottery ? cwd.match(/(\/|\\)(wx|m(qq)?)\1?/g) : '';
+  lotteryPath = isLottery ? (cwd.match(/(\/|\\)(wx|m(qq)?)\1?/g) || '' ) : '';
   workingDir = path.normalize(cwd.replace(reg(loc.src + '|' + loc.dev + '|' + loc.dist), ''));
   src = path.normalize(workingDir + '/' + loc.src + lotteryPath);
   dist = path.normalize(workingDir + (development ? '/' + loc.dev : '/' + loc.dist) + lotteryPath);

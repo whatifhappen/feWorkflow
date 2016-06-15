@@ -6,7 +6,7 @@ import { exec } from 'child_process';
 import { app, remote } from 'electron';
 import { setSnackbar } from '../../action/snackbar';
 
-const { dialog } = remote;
+const { dialog, BrowserWindow } = remote;
 
 const style = {
   margin: '0 4px'
@@ -15,28 +15,12 @@ const style = {
 let count = 1;
 const cwd = remote.app.getAppPath();
 console.log('remote.app', remote.app);
-console.log('app', app);
+console.log('remote.process.env.PATH', remote.process.env.PATH);
 
 remote.app.on('ready', () => {
-  console.log('app realdy in list-btn');
-  if (count) {
-    remote.getCurrentWindow().reload();
-  }
-  if (remote.process.platform == 'darwin' && !/:(\\|\/)usr\1local\1bin/g.test(remote.process.env.PATH)) {
-    remote.process.env.PATH += ':/usr/local/bin';
-  }
-  count = 0;
-})
+  remote.getCurrentWindow().reload();
+});
 
-// let win = new BrowserWindow({show: false})
-// win.once('ready-to-show', () => {
-//   win.show()
-// });
-
-//osx特性导致无法执行exec，强制写入env.path node的路径
-if (remote.process.platform == 'darwin' && !/:(\\|\/)usr\1local\1bin/g.test(remote.process.env.PATH)) {
-  remote.process.env.PATH += ':/usr/local/bin';
-}
 
 const ListBtns = ({btns, listId, listLocation, onProcess, cancelBuild, setSnackbar}) => (
   <div className="btn-group btn-group__right">

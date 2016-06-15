@@ -2,26 +2,27 @@ import { remote as electron} from 'electron';
 const BrowserWindow = electron.BrowserWindow;
 const Menu = electron.Menu;
 const app = electron.app;
+const Menu = electron.Menu;
 
 let template = [{
-  label: 'Edit',
+  label: '编辑',
   submenu: [{
-    label: 'Copy',
+    label: '复制',
     accelerator: 'CmdOrCtrl+C',
     role: 'copy'
   }, {
-    label: 'Paste',
+    label: '粘贴',
     accelerator: 'CmdOrCtrl+V',
     role: 'paste'
   }, {
-    label: 'Select All',
+    label: '全选',
     accelerator: 'CmdOrCtrl+A',
     role: 'selectall'
   }]
 }, {
   label: 'View',
   submenu: [{
-    label: 'Reload',
+    label: '重新加载',
     accelerator: 'CmdOrCtrl+R',
     click: function (item, focusedWindow) {
       if (focusedWindow) {
@@ -38,7 +39,7 @@ let template = [{
       }
     }
   }, {
-    label: 'Toggle Full Screen',
+    label: '全屏',
     accelerator: (function () {
       if (process.platform === 'darwin') {
         return 'Ctrl+Command+F'
@@ -185,14 +186,5 @@ if (process.platform === 'win32') {
   addUpdateMenuItems(helpMenu, 0)
 }
 
-let count = 1;
-app.on('ready', function () {
-  if (count) {
-    BrowserWindow.getCurrentWindow().reload();
-    console.log(BrowserWindow.getCurrentWindow());
-  }
-  alert('app ready');
-  const menu = Menu.buildFromTemplate(template)
-  Menu.setApplicationMenu(menu)
-  count = 0;
-})
+const menu = Menu.buildFromTemplate(template)
+Menu.setApplicationMenu(menu)
