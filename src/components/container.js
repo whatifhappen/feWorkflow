@@ -17,9 +17,11 @@ const Container = ({lists}) => {
     )
   } else {
     return (
-      <div className="container-bd">
-        <ListFolder />
-        <Dropzone />
+      <div className="container">
+        <div className="container-bd">
+          <ListFolder />
+          <Dropzone />
+        </div>
         <ContainerFt />
         <Aside />
       </div>

@@ -31,9 +31,6 @@ body {
 //#btns
 // -------  @container -------
 .container {
-  height: inherit;
-  position: relative;
-
   &-bd {
     position: relative;
     height: 100%;
@@ -74,13 +71,44 @@ body {
 }
 //#container
 
-//----------  @list-folder; ----------
-.list-folder {
-  position: relative;
-  z-index: 1;
-  margin-bottom: 80px;
+//----------  @list ----------
+.list {
+  //----------  @list-folder ----------
+  &-folder {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 80px;
+  }
+  //#list-folder
+
+  //----------  @list-operation ----------
+  &-operation {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 5;
+    background-color: rgba(33, 33, 33, .8);
+    opacity: 0;
+    transform: opacity .2s ease;
+
+    .icon-btn {
+      padding: 5px 10px;
+      box-sizing: border-box;
+      color: #fff;
+    }
+  }
+  //#list-operation
 }
-//#list-folder
+
+.show {
+  &-list-operation {
+    .list-operation {
+      opacity: 1;
+    }
+  }
+}
+
+//#list
 
 //----------  @dropzone ----------
 .dropzone {

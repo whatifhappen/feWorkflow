@@ -1,23 +1,19 @@
 import { List, ListItem } from 'material-ui/List';
-import NavigationChevronRight from 'material-ui/svg-icons/navigation/chevron-right';
 import Divider from 'material-ui/Divider';
 import Avatar from 'material-ui/Avatar';
 import FileFolder from 'material-ui/svg-icons/file/folder';
-import Subheader from 'material-ui/Subheader';
-import Colors from 'material-ui/styles/colors';
-import EditorInsertChart from 'material-ui/svg-icons/editor/insert-chart';
 import ListBtns from './list-btns';
-import { parsePath } from '../parsePath';
-import { addList } from '../../action/list';
 import { connect } from 'react-redux';
+import ListOperations from './list-operations';
+import { onListMouseEnter, onListMouseOut } from '../../action/list';
 
-const ListFolder = ({lists, addList}) => (
+const ListFolder = ({ lists, onListMouseEnter, onListMouseOut }) => (
   <div className="list-folder">
     <List Subheader="Folders" >
       {
         lists.map((list, index) => (
           <ListItem
-            className="list-item"
+            className={list.get('classes') || 'list-item'}
             key={index}
             leftAvatar={<Avatar icon={<FileFolder />} />}
             primaryText={list.get('name')}
@@ -31,11 +27,14 @@ const ListFolder = ({lists, addList}) => (
                 className="btn-group btn-group__right"
               />
             }
-            primaryTogglesNestedList={true}
+            onMouseEnter={() => onListMouseEnter(list.get('id'))}
+            onMouseLeave={() => onListMouseOut(list.get('id'))}
           >
-
-          
-        </ListItem>
+            <ListOperations
+              id={list.get('id')}
+              location={list.get('location')}
+            />
+          </ListItem>
         ))
       }
     </List>
@@ -51,7 +50,8 @@ function mapStateToProps(states) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    addList: (index, name, location) => dispatch(addList(index, name, location))
+    onListMouseEnter: (id) => dispatch(onListMouseEnter(id)),
+    onListMouseOut: (id) => dispatch(onListMouseOut(id))
   }
 }
 

@@ -21,13 +21,14 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 //   document.getElementById('container')
 // );
 
+console.log('state', store.getState().operationBtns.toJS());
 render(
   <MuiThemeProvider muiTheme={getMuiTheme()}>
     <Provider store={store}>
       <Container />
     </Provider>
   </MuiThemeProvider>,
-  document.getElementById('container')
+  document.getElementById('root')
 );
 
 
