@@ -26,9 +26,9 @@ export function detectSrcFolder (currentPath) {
 
 export function getFolderName(curPath, isFile = false) {
   if (isFile) {
-    return curPath.replace(/[^\/]+$/, '');
+    return curPath.replace(/[^\/\\]+$/, '');
   } else {
-    return curPath.match(/[^\/]+$/g);
+    return curPath.match(/[^\/\\]+$/g);
   }
 }
 
