@@ -31,7 +31,11 @@ const ListFolder = ({lists, addList}) => (
                 className="btn-group btn-group__right"
               />
             }
-          />
+            primaryTogglesNestedList={true}
+          >
+
+          
+        </ListItem>
         ))
       }
     </List>
