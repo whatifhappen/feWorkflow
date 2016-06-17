@@ -1,6 +1,10 @@
+// succinct hack for generating passable unique ids
+const uid = () => Math.random().toString(34).slice(2);
+
 export function addList (name, location) {
   return {
     type: 'ADD_LIST',
+    id: uid(),
     name,
     location
   }
@@ -44,19 +48,10 @@ export function cancelBuild(id, index, text, pid, data, fail) {
   }
 }
 
-
-export function onListMouseEnter(id) {
+export function toggleListHoverState(id, showOperation) {
   return {
     id,
-    type: 'ON_LIST_MOUSE_ENTER',
-    classes: 'list-item show-list-operation'
-  }
-}
-
-export function onListMouseOut(id) {
-  return {
-    id,
-    type: 'ON_LIST_MOUSE_OUT',
-    classes: 'list-item'
-  }
+    type: 'TOGGLE_LIST_HOVER_STATE',
+    showOperation
+  };
 }

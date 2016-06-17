@@ -5,15 +5,15 @@ import FileFolder from 'material-ui/svg-icons/file/folder';
 import ListBtns from './list-btns';
 import { connect } from 'react-redux';
 import ListOperations from './list-operations';
-import { onListMouseEnter, onListMouseOut } from '../../action/list';
+import { toggleListHoverState } from '../../action/list';
 
-const ListFolder = ({ lists, onListMouseEnter, onListMouseOut }) => (
+const ListFolder = ({ lists, toggleListHoverState }) => (
   <div className="list-folder">
     <List Subheader="Folders" >
       {
         lists.map((list, index) => (
           <ListItem
-            className={list.get('classes') || 'list-item'}
+            className={list.get('showOperation') ? 'list-item show-list-operation' : 'list-item'}
             key={index}
             leftAvatar={<Avatar icon={<FileFolder />} />}
             primaryText={list.get('name')}
@@ -27,12 +27,13 @@ const ListFolder = ({ lists, onListMouseEnter, onListMouseOut }) => (
                 className="btn-group btn-group__right"
               />
             }
-            onMouseEnter={() => onListMouseEnter(list.get('id'))}
-            onMouseLeave={() => onListMouseOut(list.get('id'))}
+            onMouseEnter={() => toggleListHoverState(list.get('id'), true)}
+            onMouseLeave={() => toggleListHoverState(list.get('id'), false)}
           >
             <ListOperations
               id={list.get('id')}
               location={list.get('location')}
+              btns={list.get('operationBtns')}
             />
           </ListItem>
         ))
@@ -50,8 +51,7 @@ function mapStateToProps(states) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onListMouseEnter: (id) => dispatch(onListMouseEnter(id)),
-    onListMouseOut: (id) => dispatch(onListMouseOut(id))
+    toggleListHoverState: (id, showOperation) => dispatch(toggleListHoverState(id, showOperation))
   }
 }
 

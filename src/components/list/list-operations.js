@@ -1,6 +1,4 @@
 import { deleteList } from '../../action/list';
-
-import FontIcon from 'material-ui/FontIcon';
 import IconButton from 'material-ui/IconButton';
 import ActionDelete from 'material-ui/svg-icons/action/delete';
 import FileFolder from 'material-ui/svg-icons/file/folder';
@@ -30,49 +28,36 @@ const getCurrentIcon = (name) => {
 const ListOperations = ({ id, location, btns, deleteList }) => (
   <div className="list-operation">
     {
-      btns.map((btn, i) => {
-        let currentIcon = getCurrentIcon(btn.get('icon'));
-
-        return (
-          <IconButton
-            className="icon-btn"
-            style={iconButtonStyle}
-            tooltip={btn.get('desc')}
-            tooltipPosition="top-center"
-            key={i}
-            onClick={() => {
-              console.log('name', btn.get('name'));
-              switch (btn.get('name')) {
-                case 'delete':
-                  return deleteList(id);
-                case 'openUrl':
-                  return shell.openExternal('http://localhost:3000');
-                case 'openFolder':
-                  return shell.showItemInFolder(location);
-                default:
-                  return false;
-              }
-            }}
-          >
-            {currentIcon}
-          </IconButton>
-        )
-      })
+      btns.map((btn, i) => (
+        <IconButton
+          className="icon-btn"
+          style={iconButtonStyle}
+          tooltip={btn.get('desc')}
+          tooltipPosition="top-center"
+          key={i}
+          onClick={() => {
+            switch (btn.get('name')) {
+              case 'delete':
+                return deleteList(id);
+              case 'openUrl':
+                return shell.openExternal('http://localhost:3000');
+              case 'openFolder':
+                return shell.showItemInFolder(location);
+              default:
+                return false;
+            }
+          }}
+        >
+          {getCurrentIcon(btn.get('icon'))}
+        </IconButton>
+      ))
     }
 
   </div>
 );
 
-function mapStateToProps(states) {
-  return {
-    btns: states.operationBtns
-  }
-}
+const mapDispatchToProps = (dispatch) => ({
+  deleteList: id => dispatch(deleteList(id))
+});
 
-function mapDispatchToProps(dispatch) {
-  return {
-    deleteList: id => dispatch(deleteList(id))
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ListOperations);
+export default connect('', mapDispatchToProps)(ListOperations);

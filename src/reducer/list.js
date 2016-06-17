@@ -33,24 +33,46 @@ const btnsList = List([
   // })
 ]);
 
+const operationBtns = List([
+  Map({
+    index: 0,
+    name: 'openFolder',
+    desc: '打开当前文件夹',
+    icon: 'folder'
+  }),
+  // Map({
+  //   index: 1,
+  //   name: 'openUrl',
+  //   desc: '打开当前BrowserSync服务器地址',
+  //   icon: 'link'
+  // }),
+  Map({
+    index: 1,
+    name: 'delete',
+    desc: '删除列表',
+    icon: 'delete'
+  })
+]);
+
 const initState = List([]);
 
 export default (state = initState, action) => {
   switch (action.type) {
     case 'ADD_LIST':
-      const newId = state.size + 1;
       return state.push(
         Map({
-          id: newId,
+          id: action.id,
           name: action.name,
-          location: action.location,
           status: '',
-          btns: btnsList
+          location: action.location,
+          btns: btnsList,
+          showOperation: false,
+          operationBtns
         }
       ));
 
     case 'DELETE_LIST':
-      return state.delete(action.id);
+      return state.filter(item => item.get('id') !== action.id);
 
     case 'PROCESSING':
       return state.map(item => {
@@ -94,19 +116,14 @@ export default (state = initState, action) => {
         } else {
           return item;
         }
-      })
-
-    case 'ON_LIST_MOUSE_ENTER':
-      return state.map(item => {
-        if (item.get('id') == action.id) {
-          return item.set('classes', action.classes);
-        }
       });
 
-    case 'ON_LIST_MOUSE_OUT':
-      return state.map(item => {
+    case 'TOGGLE_LIST_HOVER_STATE':
+      return state.map((item) => {
         if (item.get('id') == action.id) {
-          return item.set('classes', action.classes);
+          return item.set('showOperation', action.showOperation);
+        } else {
+          return item;
         }
       });
 
