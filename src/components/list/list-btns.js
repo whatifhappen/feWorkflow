@@ -22,19 +22,17 @@ const ListBtns = ({btns, listId, listLocation, onProcess, cancelBuild, setSnackb
           key={i}
           className="btn"
           style={style}
-          label={ btn.get('name') }
+          label={btn.get('name')}
           labelPosition="after"
           primary={btn.get('process')}
           secondary={btn.get('fail')}
           pid={btn.get('pid')}
           onClick={() => {
-
             if (btn.get('process')) {
               kill(btn.get('pid'));
             } else {
-
               let child = exec(`gulp ${btn.get('cmd')} --cwd ${listLocation} ${btn.get('flag')} --gulpfile ${cwd}/gulpfile.js`,  {
-                cwd: cwd
+                cwd
               });
 
               child.stderr.on('data', function (data) {

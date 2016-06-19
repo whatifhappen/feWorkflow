@@ -9,7 +9,7 @@ import { parsePath } from '../parsePath';
 const { dialog } = remote;
 
 const style = {
-  marginRight: 25,
+  margin: '0 20px 15px 0',
   float: 'right'
 };
 
