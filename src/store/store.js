@@ -18,5 +18,4 @@ import reducer from '../reducer/reducer';
 //   return store(reducer, initialState);
 // }
 
-
 export default createStore(reducer);
