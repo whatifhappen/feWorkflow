@@ -3,10 +3,10 @@ import { processing, cancelBuild } from '../../action/list';
 import { connect } from 'react-redux';
 import kill from 'tree-kill';
 import { exec } from 'child_process';
-import { app, remote } from 'electron';
+import { remote } from 'electron';
 import { setSnackbar } from '../../action/snackbar';
 
-const { dialog, BrowserWindow } = remote;
+const { dialog } = remote;
 
 const style = {
   margin: '0 4px'
@@ -14,7 +14,7 @@ const style = {
 
 const cwd = remote.app.getAppPath();
 
-const ListBtns = ({btns, listId, listLocation, onProcess, cancelBuild, setSnackbar}) => (
+const ListBtns = ({ btns, listId, listLocation, onProcess, cancelBuild, setSnackbar }) => (
   <div className="btn-group btn-group__right">
     {
       btns.map((btn, i) => (
@@ -31,12 +31,10 @@ const ListBtns = ({btns, listId, listLocation, onProcess, cancelBuild, setSnackb
             if (btn.get('process')) {
               kill(btn.get('pid'));
             } else {
-              let child = exec(`gulp ${btn.get('cmd')} --cwd ${listLocation} ${btn.get('flag')} --gulpfile ${cwd}/gulpfile.js`,  {
-                cwd
-              });
+              let child = exec(`gulp ${btn.get('cmd')} --cwd ${listLocation} ${btn.get('flag')} --gulpfile ${cwd}/gulpfile.js`,  {cwd});
 
-              child.stderr.on('data', function (data) {
-                let str = data.toString();
+              child.stderr.on('data', data => {
+                const str = data.toString();
 
                 console.error('exec error: ' + str);
                 kill(btn.get('pid'));
@@ -44,13 +42,13 @@ const ListBtns = ({btns, listId, listLocation, onProcess, cancelBuild, setSnackb
                 dialog.showErrorBox('Oops， 出错了', str);
               });
 
-              child.stdout.on('data', function (data) {
+              child.stdout.on('data', data => {
                 console.log(data.toString())
                 onProcess(listId, i, btn.get('text'), child.pid, data.toString())
               });
 
-              //关闭
-              child.stdout.on('close', function () {
+              // 关闭
+              child.stdout.on('close', () => {
                 cancelBuild(listId, i, btn.get('name'), child.pid, '编译结束', false);
                 setSnackbar('编译结束');
 
@@ -70,12 +68,14 @@ const ListBtns = ({btns, listId, listLocation, onProcess, cancelBuild, setSnackb
 //   }
 // }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    onProcess: (listId, index, name, pid, data) => dispatch(processing(listId, index, name, pid, data)),
-    cancelBuild: (listId, index, name, pid, data) => dispatch(cancelBuild(listId, index, name, pid, data)),
-    setSnackbar: (msg) => dispatch(setSnackbar(msg))
-  }
-}
+const mapDispatchToProps = (dispatch) => ({
+  onProcess: (listId, index, name, pid, data) => (
+    dispatch(processing(listId, index, name, pid, data))
+  ),
+  cancelBuild: (listId, index, name, pid, data) => (
+    dispatch(cancelBuild(listId, index, name, pid, data))
+  ),
+  setSnackbar: (msg) => dispatch(setSnackbar(msg))
+});
 
 export default connect('', mapDispatchToProps)(ListBtns);

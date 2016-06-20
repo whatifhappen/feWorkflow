@@ -43,16 +43,12 @@ const ListFolder = ({ lists, toggleListHoverState }) => (
   </div>
 );
 
-function mapStateToProps(states) {
-  return {
-    lists: states.lists
-  }
-}
+const mapStateToProps = (states) => ({
+  lists: states.lists
+});
 
-function mapDispatchToProps(dispatch) {
-  return {
-    toggleListHoverState: (id, showOperation) => dispatch(toggleListHoverState(id, showOperation))
-  }
-}
+const mapDispatchToProps = (dispatch) => ({
+  toggleListHoverState: (id, showOperation) => dispatch(toggleListHoverState(id, showOperation))
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListFolder);
