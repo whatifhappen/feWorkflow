@@ -4,8 +4,9 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { toggleSettingsShow, setFtp } from '../../action/setting';
 import { connect } from 'react-redux';
 import FTP from '../task/ftp';
+import { setConfig } from '../../action/config';
 
-const DialogSetting = ({ settings, toggleSettingsShow }) => {
+const DialogSetting = ({ setting, toggleSettingsShow, setConfig }) => {
   const actions = [
     <FlatButton
       label="取消"
@@ -18,12 +19,8 @@ const DialogSetting = ({ settings, toggleSettingsShow }) => {
       keyboardFocused={true}
       onClick={() => {
         toggleSettingsShow(false);
-        setFtp({
-          server,
-          port,
-          name,
-          pass,
-          path });
+        setConfig('config', setting);
+        var data = JSON.stringify()
       }}
     />,
   ];
@@ -39,21 +36,23 @@ const DialogSetting = ({ settings, toggleSettingsShow }) => {
         onRequestClose={() => toggleSettingsShow(false)}
         autoScrollBodyContent={true}
       >
-        <div className="setting-mod">
-          <FTP />
-        </div>
+        <form>
+          <div className="setting-mod">
+            <FTP />
+          </div>
+        </form>
       </Dialog>
     </div>
   );
 }
 
 const mapStateToProps = states => ({
-  settings: states.settings
+  setting: states.setting
 });
 
 const mapDispatchToProps = dispatch => ({
   toggleSettingsShow: show => dispatch(toggleSettingsShow(show)),
-  setFtp: ({ server, port, name, pass, path }) => dispatch(setFtp({ server, port, name, pass, path }))
+  setConfig: (fileName, states) => setConfig(fileName, states)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DialogSetting);

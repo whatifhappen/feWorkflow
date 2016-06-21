@@ -5,13 +5,10 @@ export function toggleSettingsShow(showSettings = false) {
   };
 }
 
-export function setFtp({ server, port, username, pass, path }) {
+export function setFtp(index, value) {
   return {
     type: 'SET_FTP',
-    server,
-    port,
-    username,
-    pass,
-    path
+    index,
+    value
   };
 }

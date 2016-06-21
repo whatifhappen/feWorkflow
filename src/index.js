@@ -21,7 +21,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 //   document.getElementById('container')
 // );
 
-console.log('state', store.getState().setting);
+console.log('state', store.getState().setting.toJS());
 render(
   <MuiThemeProvider muiTheme={getMuiTheme()}>
     <Provider store={store}>
@@ -35,19 +35,19 @@ render(
 const dropzone = document.getElementById('dropzone');
 let dragEnterElem;
 
-document.addEventListener('dragenter', function (event) {
+document.addEventListener('dragenter', event => {
   dragEnterElem = event.target;
   dropzone.classList.add('ondragover');
   event.preventDefault();
   return false;
 }, false);
 
-document.addEventListener('dragover', function (event) {
+document.addEventListener('dragover', event => {
   event.preventDefault();
   return false;
 }, false);
 
-document.addEventListener('dragleave', function (event) {
+document.addEventListener('dragleave', event => {
   if (dragEnterElem == event.target) {
     dropzone.classList.remove('ondragover');
   }
@@ -55,7 +55,7 @@ document.addEventListener('dragleave', function (event) {
   return false;
 }, false);
 
-document.addEventListener('drop', function (event) {
+document.addEventListener('drop', event => {
   dropzone.classList.remove('ondragover');
   event.preventDefault();
   return false;
