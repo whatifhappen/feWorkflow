@@ -1,5 +1,4 @@
 import TextField from 'material-ui/TextField';
-import { List, Map } from 'immutable';
 import { connect } from 'react-redux';
 import { setFtp } from '../../action/setting';
 
@@ -15,8 +14,12 @@ const FTP = ({ ftp, setFtp }) => (
             hintText={btn.get('name')}
             floatingLabelText={btn.get('label')}
             onBlur={(e) => {
-              setFtp(i, e.target.value);
+              if (e.target.value.trim()) {
+                setFtp(i, e.target.value);
+              }
             }}
+            type={btn.get('name') === 'Password' ? 'password' : 'text'}
+            errorText={btn.get('value') ? '' : '此表单必须填写'}
           />
         ))
       }

@@ -5,7 +5,6 @@ var gulp = require('gulp'),
   runSequence = require('run-sequence').use(gulp),
   bs = require('browser-sync').create(),
   reload = bs.reload,
-  isBsActive = bs.active,
   babel = require('gulp-babel'),
   argv = require('yargs').argv,
   production = !!argv.production, // true if --production flag is used;
@@ -14,8 +13,7 @@ var gulp = require('gulp'),
   path = require('path'),
   cached = require('gulp-cached'),
   gulpif = require('gulp-if'),
-  // config = require('./config.json') || undefined;
-  config = '';
+  config = require('./config.json');
 
 //
 //配置项
@@ -426,6 +424,34 @@ gulp.task('copy:files', function () {
       .pipe(gulp.dest(dist));
   }
 });
+
+var gutil = require('gulp-util');
+var ftp = require('vinyl-ftp');
+
+gulp.task('ftp', function () {
+
+  var conn = ftp.create({
+    host: config.ftp[0].value,
+    port: config.ftp[1].value,
+    user: config.ftp[2].value,
+    password: config.ftp[3].value,
+    parallel: 10,
+    log: gutil.log
+  });
+
+  var remotePath = config.ftp[5].value + '/' + path.relative(config.ftp[4].value, dist);
+
+  console.log('path.resolve', remotePath)
+  console.log('conn', conn)
+
+
+  // using base = '.' will transfer everything to /public_html correctly
+  // turn off buffering in gulp.src for best performance
+  return gulp.src(dist + '/**', { cwd: dist, base: dist, buffer: false })
+    .pipe(conn.newer(dist)) // only upload newer files
+    .pipe(conn.dest(remotePath));
+});
+
 
 //dev
 gulp.task('dev', function (cb) {

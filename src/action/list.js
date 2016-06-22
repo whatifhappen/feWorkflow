@@ -1,12 +1,13 @@
 // succinct hack for generating passable unique ids
 const uid = () => Math.random().toString(34).slice(2);
 
-export function addList (name, location) {
+export function addList (name, location, workingDir) {
   return {
     type: 'ADD_LIST',
     id: uid(),
     name,
-    location
+    location,
+    workingDir
   }
 }
 

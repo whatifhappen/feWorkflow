@@ -3,33 +3,39 @@ import { List, Map } from 'immutable';
 const ftp = List([
   Map({
     index: 0,
-    name: 'Server',
+    name: 'Host',
     label: 'FTP服务器',
-    value: ''
+    value: '10.123.19.48'
   }),
   Map({
     index: 1,
     name: 'Port',
     label: '端口号',
-    value: ''
+    value: '36000'
   }),
   Map({
     index: 2,
     name: 'Username',
     label: '用户名',
-    value: ''
+    value: 'root'
   }),
   Map({
     index: 3,
     name: 'Password',
     label: '密码',
-    value: ''
+    value: 'itcloud@123'
   }),
   Map({
     index: 4,
-    name: 'path',
-    label: '远程路径',
-    value: ''
+    name: 'localPath',
+    label: '默认本地目录',
+    value: '/Users/TEN/Sites/Code/work/vd'
+  }),
+  Map({
+    index: 5,
+    name: 'remotePath',
+    label: '默认远程路径',
+    value: '/data/b2b2c/web_static/static/vd'
   }),
 ]);
 

@@ -30,7 +30,7 @@ const AddListBtn = ({ lists, addList }) => (
         if (fileNames === undefined) return;
 
         let curPath = parsePath(fileNames[0]);
-        addList(curPath.folderName, curPath.src);
+        addList(curPath.folderName, curPath.src, curPath.dist);
 
         return false;
       });

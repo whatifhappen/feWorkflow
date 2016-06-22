@@ -6,7 +6,7 @@ import { remote } from 'electron';
 const cwd = remote.app.getAppPath();
 
 export const getConfig = (fileName = 'config') => {
-  fs.readFile(`./${fileName}.json`, 'utf8', (err, data) => {
+  fs.readFile(`${cwd}/${fileName}.json`, 'utf8', (err, data) => {
     if (err) {
       throw err;
     }
@@ -19,9 +19,6 @@ export const getConfig = (fileName = 'config') => {
 };
 
 export const setConfig = (fileName = 'config', states = store) => {
-  console.log('cwd', `${cwd}/${fileName}.json`);
-  console.log('files', JSON.stringify(states.toJSON()));
-
   fs.writeFile(`${cwd}/${fileName}.json`, JSON.stringify(states.toJSON()), err => {
     if (err) {
       console.log('There has been an error saving your configuration data.');

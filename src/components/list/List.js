@@ -23,6 +23,7 @@ const ListFolder = ({ lists, toggleListHoverState }) => (
                 btns={list.get('btns')}
                 listId={list.get('id')}
                 listLocation={list.get('location')}
+                dist={list.get('dist')}
                 snackbar={list.get('snackbar')}
                 className="btn-group btn-group__right"
               />

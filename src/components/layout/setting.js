@@ -6,7 +6,19 @@ import { connect } from 'react-redux';
 import FTP from '../task/ftp';
 import { setConfig } from '../../action/config';
 
-const DialogSetting = ({ setting, toggleSettingsShow, setConfig }) => {
+const isFormAllFilled = (elem, length) => {
+  const data = elem.toJS();
+
+  console.log('data', data);
+  for (let i = 0, len = length; i < len; i++) {
+    if (!data.value) {
+      return false;
+    }
+  }
+
+  return true;
+}
+const DialogSetting = ({ setting, ftp, toggleSettingsShow, setConfig }) => {
   const actions = [
     <FlatButton
       label="取消"
@@ -18,36 +30,34 @@ const DialogSetting = ({ setting, toggleSettingsShow, setConfig }) => {
       primary={true}
       keyboardFocused={true}
       onClick={() => {
+        let isFtpFormAllFilled = isFormAllFilled(ftp, ftp.size);
         toggleSettingsShow(false);
         setConfig('config', setting);
-        var data = JSON.stringify()
       }}
     />,
   ];
 
   return (
     <div>
-      <RaisedButton label="Scrollable Dialog" />
       <Dialog
         title="设置"
         actions={actions}
         modal={false}
-        open={true}
+        open={setting.get('showSettings')}
         onRequestClose={() => toggleSettingsShow(false)}
         autoScrollBodyContent={true}
       >
-        <form>
-          <div className="setting-mod">
-            <FTP />
-          </div>
-        </form>
+        <div className="setting-mod">
+          <FTP />
+        </div>
       </Dialog>
     </div>
   );
 }
 
 const mapStateToProps = states => ({
-  setting: states.setting
+  setting: states.setting,
+  ftp: states.setting.get('ftp')
 });
 
 const mapDispatchToProps = dispatch => ({

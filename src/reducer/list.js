@@ -21,16 +21,16 @@ const btnsList = List([
     fail: false,
     pid: null
   }),
-  // Map({
-  //   index: 2,
-  //   type: 'WAIT',
-  //   name: 'FTP',
-  //   cmd: 'ftp',
-  //   flag: '',
-  //   process: false,
-  //   fail: false,
-  //   pid: null
-  // })
+  Map({
+    index: 2,
+    type: 'WAIT',
+    name: 'FTP',
+    cmd: 'ftp',
+    flag: '',
+    process: false,
+    fail: false,
+    pid: null
+  })
 ]);
 
 const operationBtns = List([
@@ -65,6 +65,7 @@ export default (state = initState, action) => {
           name: action.name,
           status: '',
           location: action.location,
+          dist: action.dist,
           btns: btnsList,
           showOperation: false,
           operationBtns
