@@ -1,23 +1,13 @@
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
-import { toggleSettingsShow, setFtp } from '../../action/setting';
+import { toggleSettingsShow } from '../../action/setting';
 import { connect } from 'react-redux';
 import FTP from '../task/ftp';
+import SyncFolder from '../task/sync-folder';
 import { setConfig } from '../../action/config';
 
-const isFormAllFilled = (elem, length) => {
-  const data = elem.toJS();
 
-  console.log('data', data);
-  for (let i = 0, len = length; i < len; i++) {
-    if (!data.value) {
-      return false;
-    }
-  }
-
-  return true;
-}
 const DialogSetting = ({ setting, ftp, toggleSettingsShow, setConfig }) => {
   const actions = [
     <FlatButton
@@ -30,7 +20,6 @@ const DialogSetting = ({ setting, ftp, toggleSettingsShow, setConfig }) => {
       primary={true}
       keyboardFocused={true}
       onClick={() => {
-        let isFtpFormAllFilled = isFormAllFilled(ftp, ftp.size);
         toggleSettingsShow(false);
         setConfig('config', setting);
       }}
@@ -49,6 +38,7 @@ const DialogSetting = ({ setting, ftp, toggleSettingsShow, setConfig }) => {
       >
         <div className="setting-mod">
           <FTP />
+          <SyncFolder />
         </div>
       </Dialog>
     </div>

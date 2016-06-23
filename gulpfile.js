@@ -18,8 +18,7 @@ var gulp = require('gulp'),
 //
 //配置项
 //----------------------------------
-var copyToLocation = '', //复制目的路径，用于复制到jats的svn，填写路径到vd目录即可，例：D:\\Code\\work\\vd_jats\\vd\\, 内层文件结构会自动补全
-  ignoreFolder = 'less|css|temp|im.*|js|lib*?|inc|psd', //排除路径的文件夹地址;
+var ignoreFolder = 'less|css|temp|im.*|js|lib*?|inc|psd', //排除路径的文件夹地址;
   copyFiles = ''; //单个格式：/**/*.ttf, 多个格式: /**/*.+(ttf|wmv);用于fonts，sounds这种后缀名。
 //#配置项
 
@@ -406,11 +405,11 @@ gulp.task('replace', function () {
  * copy
  */
 gulp.task('copy', function () {
+  var copyToLocation = config.syncFolder[0].location; //复制目的路径，用于复制到jats的svn，填写路径到vd目录即可，例：D:\\Code\\work\\vd_jats\\vd\\, 内层文件结构会自动补全
+
   if (copyToLocation) {
-    return gulp.src(dist + '/**/*.+(css|png|gif|jpg|svg)', {
-        base: dist
-      })
-      .pipe(gulp.dest(config.dist || path.join(copyToLocation, workingDir.replace(/.*(vd)/g, ''))));
+    return gulp.src(dist + '/**/*.+(css|png|gif|jpg|svg)', {cwd: dist})
+      .pipe(gulp.dest(config.syncFolder[1].location + '/' + path.relative(copyToLocation, dist)));
   } else {
     alert('请输入目的地路径');
   }
@@ -447,10 +446,23 @@ gulp.task('ftp', function () {
 
   // using base = '.' will transfer everything to /public_html correctly
   // turn off buffering in gulp.src for best performance
-  return gulp.src(dist + '/**', { cwd: dist, base: dist, buffer: false })
-    .pipe(conn.newer(dist)) // only upload newer files
+  return gulp.src(dist + '/**', { cwd: dist, buffer: false })
+    .pipe(conn.newer(remotePath)) // only upload newer files
     .pipe(conn.dest(remotePath));
 });
+
+// var ftp = require('gulp-sftp');
+//
+// gulp.task('ftp', function () {
+// 	return gulp.src(dist + '/**')
+// 		.pipe(ftp({
+//       host: config.ftp[0].value,
+//       port: config.ftp[1].value,
+//       user: config.ftp[2].value,
+//       pass: config.ftp[3].value,
+//       remotePath: config.ftp[5].value + '/' + path.relative(config.ftp[4].value, dist)
+// 		}));
+// });
 
 
 //dev

@@ -1,6 +1,6 @@
 import TextField from 'material-ui/TextField';
 import { connect } from 'react-redux';
-import { setFtp } from '../../action/setting';
+import { setFtp } from '../../action/task/ftp';
 
 const FTP = ({ ftp, setFtp }) => (
   <div className="setting-mod_item">

@@ -3,7 +3,10 @@ import IconButton from 'material-ui/IconButton';
 import { connect } from 'react-redux';
 import { toggleSettingsShow, resetFtp } from '../../action/setting';
 import { getConfig } from '../../action/config';
+import { fromJS, Iterable } from 'immutable';
+import { remote } from 'electron';
 
+const cwd = remote.app.getAppPath();
 const style = {
   position: 'absolute'
 };

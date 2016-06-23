@@ -1,33 +1,40 @@
 import { List, Map } from 'immutable';
 
-const initState = List([
+export const ftp = List([
   Map({
-    name: 'Server',
-    label: 'FTP服务器'
+    index: 0,
+    name: 'Host',
+    label: 'FTP服务器',
+    value: ''
   }),
   Map({
+    index: 1,
     name: 'Port',
-    label: '端口号'
+    label: '端口号',
+    value: ''
   }),
   Map({
+    index: 2,
     name: 'Username',
-    label: '用户名'
+    label: '用户名',
+    value: ''
   }),
   Map({
+    index: 3,
     name: 'Password',
-    label: '密码'
+    label: '密码',
+    value: ''
   }),
   Map({
-    name: 'path',
-    label: '远程路径'
+    index: 4,
+    name: 'localPath',
+    label: '默认本地目录',
+    value: ''
+  }),
+  Map({
+    index: 5,
+    name: 'remotePath',
+    label: '默认远程路径',
+    value: ''
   }),
 ]);
-
-export default (state = initState, action) => {
-  switch (action.type) {
-    case 'SET_FTP':
-      return state.setIn(['settings', 'ftp', 'name'], action.name);
-    default:
-      return state;  
-  }
-}

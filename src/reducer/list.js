@@ -30,6 +30,16 @@ const btnsList = List([
     process: false,
     fail: false,
     pid: null
+  }),
+  Map({
+    index: 3,
+    type: 'WAIT',
+    name: '复制到文件夹',
+    cmd: 'copy',
+    flag: '',
+    process: false,
+    fail: false,
+    pid: null
   })
 ]);
 
@@ -65,7 +75,6 @@ export default (state = initState, action) => {
           name: action.name,
           status: '',
           location: action.location,
-          dist: action.dist,
           btns: btnsList,
           showOperation: false,
           operationBtns

@@ -7,7 +7,6 @@ import { remote } from 'electron';
 import { setSnackbar } from '../../action/snackbar';
 import path from 'path';
 
-
 const { dialog } = remote;
 
 const style = {
@@ -16,8 +15,7 @@ const style = {
 
 const cwd = remote.app.getAppPath();
 
-const ListBtns = ({ ftpSetting, dist, btns, listId, listLocation, onProcess, cancelBuild, setSnackbar }) => {
-console.log('ftpSetting', ftpSetting.getIn([0, 'value']))
+const ListBtns = ({ ftpSetting, btns, listId, listLocation, onProcess, cancelBuild, setSnackbar }) => {
   return (
     <div className="btn-group btn-group__right">
       {
@@ -35,46 +33,29 @@ console.log('ftpSetting', ftpSetting.getIn([0, 'value']))
               if (btn.get('process')) {
                 kill(btn.get('pid'));
               } else {
-                if (btn.get('cmd') === 'ftp') {
-                  let fs = require( 'vinyl-fs' );
-                  let ftp = require( 'vinyl-ftp' );
+                let child = exec(`gulp ${btn.get('cmd')} --cwd ${listLocation} ${btn.get('flag')} --gulpfile ${cwd}/gulpfile.js`,  {cwd});
 
-                  let conn = new ftp({
-                  	host: ftpSetting.getIn([0, 'value']),
-                  	port: ftpSetting.getIn([1, 'value']),
-                  	user: ftpSetting.getIn([2, 'value']),
-                  	password: ftpSetting.getIn([3, 'value'])
-                  });
-                  console.log('4', ftpSetting.getIn([4, 'value']));
-                  fs.src(`${dist}/**`, { cwd: dist, base: dist, buffer: false })
-                  	.pipe(conn.dest(`${ftpSetting.getIn([5, 'value'])}/${path.relative(ftpSetting.getIn([4, 'value']), dist)}`));
+                child.stderr.on('data', data => {
+                  const str = data.toString();
 
-                } else {
-                  let child = exec(`gulp ${btn.get('cmd')} --cwd ${listLocation} ${btn.get('flag')} --gulpfile ${cwd}/gulpfile.js`,  {cwd});
+                  console.error('exec error: ' + str);
+                  kill(btn.get('pid'));
+                  cancelBuild(listId, i, btn.get('name'), child.pid, str, true);
+                  dialog.showErrorBox('Oops， 出错了', str);
+                });
 
-                  child.stderr.on('data', data => {
-                    const str = data.toString();
+                child.stdout.on('data', data => {
+                  console.log(data.toString())
+                  onProcess(listId, i, btn.get('text'), child.pid, data.toString())
+                });
 
-                    console.error('exec error: ' + str);
-                    kill(btn.get('pid'));
-                    cancelBuild(listId, i, btn.get('name'), child.pid, str, true);
-                    dialog.showErrorBox('Oops， 出错了', str);
-                  });
+                // 关闭
+                child.stdout.on('close', () => {
+                  cancelBuild(listId, i, btn.get('name'), child.pid, '编译结束', false);
+                  setSnackbar('编译结束');
 
-                  child.stdout.on('data', data => {
-                    console.log(data.toString())
-                    onProcess(listId, i, btn.get('text'), child.pid, data.toString())
-                  });
-
-                  // 关闭
-                  child.stdout.on('close', () => {
-                    cancelBuild(listId, i, btn.get('name'), child.pid, '编译结束', false);
-                    setSnackbar('编译结束');
-
-                    console.info('编译结束');
-                  });
-                }
-
+                  console.info('编译结束');
+                });
               }
             }}
           />
