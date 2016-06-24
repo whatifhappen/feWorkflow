@@ -29,7 +29,7 @@ const DialogSetting = ({ setting, ftp, toggleSettingsShow, setConfig }) => {
   return (
     <div>
       <Dialog
-        title="设置"
+        title="设置(开发中)"
         actions={actions}
         modal={false}
         open={setting.get('showSettings')}
