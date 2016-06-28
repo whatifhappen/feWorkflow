@@ -12,10 +12,12 @@ const FTP = ({ ftp, setFtp }) => (
             key={i}
             className="text-field"
             hintText={btn.get('name')}
+            defaultValue={btn.get('value').trim()}
             floatingLabelText={btn.get('label')}
             onBlur={(e) => {
-              if (e.target.value.trim()) {
-                setFtp(i, e.target.value);
+              const value = e.target.value.trim();
+              if (value) {
+                setFtp(i, value);
               }
             }}
             type={btn.get('name') === 'Password' ? 'password' : 'text'}

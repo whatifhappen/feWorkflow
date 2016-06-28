@@ -13,10 +13,12 @@ const SyncFolder = ({ syncFolder, synFolderLoc, synFolderType }) => (
             key={i}
             className="text-field"
             hintText={textField.get('name')}
+            defaultValue={textField.get('location').trim()}
             floatingLabelText={textField.get('label')}
             onBlur={(e) => {
-              if (e.target.value.trim()) {
-                synFolderLoc(i, e.target.value);
+              const value = e.target.value.trim();
+              if (value) {
+                synFolderLoc(i, value);
               }
             }}
           />

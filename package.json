@@ -59,6 +59,7 @@
     "imagemin-pngquant": "^5.0.0",
     "less-loader": "^2.2.3",
     "material-ui": "^0.15.0-alpha.2",
+    "redux-storage": "^4.0.1",
     "rimraf": "^2.4.3",
     "run-sequence": "^1.2.1",
     "style-loader": "^0.13.1",
@@ -68,5 +69,8 @@
     "webpack-dev-middleware": "^1.4.0",
     "webpack-hot-middleware": "^2.9.1"
   },
-  "nodejs": true
+  "nodejs": true,
+  "dependencies": {
+    "redux-storage-merger-immutablejs": "^1.0.2"
+  }
 }

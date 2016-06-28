@@ -454,13 +454,21 @@ gulp.task('ftp', function () {
 // var ftp = require('gulp-sftp');
 //
 // gulp.task('ftp', function () {
+//   console.log('config', config);
 // 	return gulp.src(dist + '/**')
 // 		.pipe(ftp({
 //       host: config.ftp[0].value,
 //       port: config.ftp[1].value,
 //       user: config.ftp[2].value,
 //       pass: config.ftp[3].value,
-//       remotePath: config.ftp[5].value + '/' + path.relative(config.ftp[4].value, dist)
+//       remotePath: config.ftp[5].value + '/' + path.relative(config.ftp[4].value, dist),
+//       cb: function(response) {
+//         if (response) {
+//           console.log('upload finished');
+//         } else {
+//           gulp.start('ftp');
+//         }
+//       }
 // 		}));
 // });
 

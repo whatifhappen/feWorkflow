@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware } from 'redux';
 import reducer from '../reducer/reducer';
 import thunk from 'redux-thunk';
+import { getConfig } from '../action/config';
 
 //
 // export default createStore(reducer);
@@ -19,7 +20,28 @@ import thunk from 'redux-thunk';
 //   return store(reducer, initialState);
 // }
 
-export default createStore(
+const data = getConfig('config');
+
+/* response middleware */
+const responseMiddleware = store => next => action => {
+  const { type, ...rest } = action;
+
+  if (type !== 'DATA_REQUEST') return next(action);
+
+  next(action);
+  setTimeout(() => {
+    next({
+      ...rest,
+      type: 'DATA_RESPONSE',
+      res: {
+        data: data
+      }
+    });
+  }, 700);
+};
+
+/* create store */
+const store = createStore(
   reducer,
-  applyMiddleware(thunk)
+  applyMiddleware(responseMiddleware)
 );

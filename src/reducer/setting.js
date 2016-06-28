@@ -2,12 +2,14 @@ import { List, Map } from 'immutable';
 import { ftp } from './task/ftp';
 import { syncFolder } from './task/sync-folder';
 import { syncFolderTypes } from './task/sync-folder-types';
+import { outputFolder } from './task/output-folder';
 
 const initState = new Map({
   showSettings: false,
   syncFolder,
   syncFolderTypes,
-  ftp
+  ftp,
+  outputFolder
 });
 
 export default (state = initState, action) => {
@@ -20,6 +22,8 @@ export default (state = initState, action) => {
       return state.setIn(['syncFolderLoc', action.index, 'location'], action.location);
     case 'SET_SYNC_FOLDER_TYPE':
       return state.setIn(['syncFolderLoc', action.index, 'location'], action.location)
+    case 'SET_OUTPUT_FOLDER':
+      return state.setIn(['outputFolder', action.index, 'value'], action.value)
     default:
       return state;
   }

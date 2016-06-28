@@ -6,7 +6,6 @@ import { getConfig } from '../../action/config';
 import { fromJS, Iterable } from 'immutable';
 import { remote } from 'electron';
 
-const cwd = remote.app.getAppPath();
 const style = {
   position: 'absolute'
 };
@@ -23,8 +22,8 @@ const Aside = ({ toggleSettingsShow, resetFtp, getConfig }) => (
       style={style}
       tooltipPosition="top-center"
       onClick={() => {
-        // let data = getConfig();
-        // console.log('getConfig', data);
+        const data = getConfig('config');
+        console.log('getConfig', data);
         toggleSettingsShow(true)
       }}
     >
@@ -36,7 +35,7 @@ const Aside = ({ toggleSettingsShow, resetFtp, getConfig }) => (
 const mapDispatchToProps = (dispatch) => ({
   toggleSettingsShow: show => dispatch(toggleSettingsShow(show)),
   resetFtp: (index, defaultValue) => dispatch(resetFtp(index, defaultValue)),
-  getConfig: name => dispatch(getConfig(name))
+  getConfig: name => getConfig(name)
 });
 
 export default connect('', mapDispatchToProps)(Aside);

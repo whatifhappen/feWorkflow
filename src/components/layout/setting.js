@@ -1,14 +1,14 @@
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
 import { toggleSettingsShow } from '../../action/setting';
 import { connect } from 'react-redux';
+import OutputFolder from '../task/output-folder';
 import FTP from '../task/ftp';
 import SyncFolder from '../task/sync-folder';
-import { setConfig } from '../../action/config';
+import { setConfig, getConfig } from '../../action/config';
 
 
-const DialogSetting = ({ setting, ftp, toggleSettingsShow, setConfig }) => {
+const DialogSetting = ({ setting, ftp, toggleSettingsShow, setConfig, getConfig }) => {
   const actions = [
     <FlatButton
       label="取消"
@@ -20,8 +20,9 @@ const DialogSetting = ({ setting, ftp, toggleSettingsShow, setConfig }) => {
       primary={true}
       keyboardFocused={true}
       onClick={() => {
-        toggleSettingsShow(false);
+        getConfig('config');
         setConfig('config', setting);
+        toggleSettingsShow(false);
       }}
     />,
   ];
@@ -37,6 +38,7 @@ const DialogSetting = ({ setting, ftp, toggleSettingsShow, setConfig }) => {
         autoScrollBodyContent={true}
       >
         <div className="setting-mod">
+          <OutputFolder />
           <FTP />
           <SyncFolder />
         </div>
@@ -52,7 +54,8 @@ const mapStateToProps = states => ({
 
 const mapDispatchToProps = dispatch => ({
   toggleSettingsShow: show => dispatch(toggleSettingsShow(show)),
-  setConfig: (fileName, states) => setConfig(fileName, states)
+  setConfig: (fileName, states) => setConfig(fileName, states),
+  getConfig: fileName => getConfig(fileName)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DialogSetting);

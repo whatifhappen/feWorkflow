@@ -10,9 +10,7 @@ const Menu = electron.Menu;
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
-let count;
 function createWindow() {
-
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 1000,
@@ -20,11 +18,11 @@ function createWindow() {
   });
 
   // and load the index.html of the app.
-  mainWindow.loadURL('file://' + __dirname + '/index.html');
-  // mainWindow.loadURL('http://localhost:3333/');
+  // mainWindow.loadURL('file://' + __dirname + '/index.html');
+  mainWindow.loadURL('http://localhost:3333/');
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -230,11 +228,7 @@ app.on('window-all-closed', function () {
   }
 });
 
-app.on('will-finish-lauching', () => {
-});
-
 app.on('activate', function () {
-
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) {
