@@ -25,7 +25,7 @@ const getCurrentIcon = (name) => {
   }
 };
 
-const ListOperations = ({ id, location, btns, deleteList }) => (
+const ListOperations = ({ id, location, url, btns, deleteList }) => (
   <div className="list-operation">
     {
       btns.map((btn, i) => (
@@ -40,7 +40,7 @@ const ListOperations = ({ id, location, btns, deleteList }) => (
               case 'delete':
                 return deleteList(id);
               case 'openUrl':
-                return shell.openExternal('http://localhost:3000');
+                return shell.openExternal(url || 'about:blank');
               case 'openFolder':
                 return shell.showItemInFolder(location);
               default:

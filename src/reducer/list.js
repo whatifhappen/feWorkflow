@@ -1,68 +1,6 @@
 import { List, Map } from 'immutable';
-
-const btnsList = List([
-  Map({
-    index: 0,
-    type: 'WAIT',
-    name: '开发',
-    cmd: 'dev',
-    flag: '--development',
-    process: false,
-    fail: false,
-    pid: null
-  }),
-  Map({
-    index: 1,
-    type: 'WAIT',
-    name: '压缩',
-    cmd: '',
-    flag: '--production',
-    process: false,
-    fail: false,
-    pid: null
-  }),
-  Map({
-    index: 2,
-    type: 'WAIT',
-    name: 'FTP',
-    cmd: 'ftp',
-    flag: '',
-    process: false,
-    fail: false,
-    pid: null
-  }),
-  Map({
-    index: 3,
-    type: 'WAIT',
-    name: '复制到文件夹',
-    cmd: 'copy',
-    flag: '',
-    process: false,
-    fail: false,
-    pid: null
-  })
-]);
-
-const operationBtns = List([
-  Map({
-    index: 0,
-    name: 'openFolder',
-    desc: '打开当前文件夹',
-    icon: 'folder'
-  }),
-  // Map({
-  //   index: 1,
-  //   name: 'openUrl',
-  //   desc: '打开当前BrowserSync服务器地址',
-  //   icon: 'link'
-  // }),
-  Map({
-    index: 1,
-    name: 'delete',
-    desc: '删除列表',
-    icon: 'delete'
-  })
-]);
+import { btnsList } from './list-btns';
+import { operationBtns } from './list-operation';
 
 const initState = List([]);
 
@@ -77,7 +15,8 @@ export default (state = initState, action) => {
           location: action.location,
           btns: btnsList,
           showOperation: false,
-          operationBtns
+          operationBtns,
+          url: ''
         }
       ));
 
@@ -112,8 +51,16 @@ export default (state = initState, action) => {
               .setIn(['btns', action.btns.index, 'text'], '编译中...')
               .setIn(['btns', action.btns.index, 'fail'], action.btns.fail)
               .setIn(['btns', action.btns.index, 'pid'], action.btns.pid);
-          })
+          });
+        } else {
+          return item;
+        }
+      });
 
+    case 'SET_EXTERNAL_URL':
+      return state.map(item => {
+        if (item.get('id') == action.id) {
+          return item.set('url', action.url);
         } else {
           return item;
         }

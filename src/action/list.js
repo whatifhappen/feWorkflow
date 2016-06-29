@@ -1,21 +1,21 @@
 // succinct hack for generating passable unique ids
 const uid = () => Math.random().toString(34).slice(2);
 
-export function addList (name, location, workingDir) {
+export function addList(name, location, workingDir) {
   return {
     type: 'ADD_LIST',
     id: uid(),
     name,
     location,
     workingDir
-  }
+  };
 }
 
 export function deleteList(id) {
   return {
     type: 'DELETE_LIST',
     id
-  }
+  };
 }
 
 export function processing(id, index, name, pid, data) {
@@ -46,7 +46,7 @@ export function cancelBuild(id, index, text, pid, data, fail) {
       data,
       cmd: text
     }
-  }
+  };
 }
 
 export function toggleListHoverState(id, showOperation) {
@@ -54,5 +54,13 @@ export function toggleListHoverState(id, showOperation) {
     id,
     type: 'TOGGLE_LIST_HOVER_STATE',
     showOperation
+  };
+}
+
+export function setExternalUrl(id, url) {
+  return {
+    type: 'SET_EXTERNAL_URL',
+    id,
+    url
   };
 }

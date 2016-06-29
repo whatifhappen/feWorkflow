@@ -34,6 +34,7 @@ const ListFolder = ({ lists, toggleListHoverState }) => (
               id={list.get('id')}
               location={list.get('location')}
               btns={list.get('operationBtns')}
+              url={list.get('url')}
             />
           </ListItem>
         ))

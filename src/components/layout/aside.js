@@ -3,8 +3,6 @@ import IconButton from 'material-ui/IconButton';
 import { connect } from 'react-redux';
 import { toggleSettingsShow, resetFtp } from '../../action/setting';
 import { getConfig } from '../../action/config';
-import { fromJS, Iterable } from 'immutable';
-import { remote } from 'electron';
 
 const style = {
   position: 'absolute'
@@ -22,8 +20,6 @@ const Aside = ({ toggleSettingsShow, resetFtp, getConfig }) => (
       style={style}
       tooltipPosition="top-center"
       onClick={() => {
-        const data = getConfig('config');
-        console.log('getConfig', data);
         toggleSettingsShow(true)
       }}
     >

@@ -25,11 +25,13 @@ var ignoreFolder = 'less|css|temp|im.*|js|lib*?|inc|psd', //排除路径的文�
 //路径
 var cwd = process.cwd(),
   loc = {
-    src: 'src',
-    dev: 'tc_dev',
-    dist: 'tc_idc'
+    src: config.outputFolder[0].value || 'src',
+    dev: config.outputFolder[1].value || 'tc_dev',
+    dist: config.outputFolder[2].value || 'tc_idc'
   },
-  workingDir, src, dist,
+  workingDir,
+  src,
+  dist,
   isLottery,
   lotteryPath;
 
@@ -58,7 +60,7 @@ var paths = {
   images: (config.images && config.images.length) ? config.images : src + '/**/*.+(png|jpg|gif|svg)',
   css: (config.css && config.css.length) ? config.css : (config.cssConcat && config.cssConcat.length) ? config.cssConcat : (src + '/**/*.css'),
   less: (config.less && config.less.length) ? config.less.concat(['!/**/import.*.less', '!/**/import_*.less']) : [src + '/**/*.less', '!/**/import.*.less', '!/**/import_*.less'],
-  // less: [src + '/**/css/*.less'],
+  sass: (config.sass && config.sass.length) ? config.sass.concat(['!/**/import.*.+(sass|scss)', '!/**/import_*.+(sass|scss)']) : [src + '/**/*.+(sass|scss)', '!/**/import.*.+(sass|scss)', '!/**/import_*.+(sass|scss)'],
   html: (config.html && config.html.length) ? config.html : [src + '/**/*.+(html|php)', '!' + src + '/**/inc/*.html']
 };
 
@@ -380,6 +382,46 @@ gulp.task('less', function () {
 //compile less and replace tc_dev, src to tc_idc
 gulp.task('less-build', function () {
   runSequence('less:build', 'replace');
+});
+
+/**
+ * sass task
+ * @param  {[type]} 'sass:build' [description]
+ * @param  {[type]} function     (             [description]
+ * @return {[type]}              [description]
+ */
+gulp.task('sass:build', function () {
+  return gulp.src(paths.sass, {
+      base: src
+    })
+    .pipe(sass().on('error', sass.logError))
+    .pipe(postcss(processors))
+    .pipe(gulp.dest(dist));
+});
+
+gulp.task('sass', function () {
+  var _processors = [autoprefixer(AUTOPREFIXER_BROWSERS)];
+  return gulp.src(paths.sass)
+    .pipe(watch(paths.sass, {
+      // ignoreInitial: true,
+      base: src,
+      name: 'sass'
+        // debounceDelay: 100,
+        // verbose: true
+    }))
+    .pipe(plumber({
+      errorHandler: onError
+    }))
+    .pipe(sourcemaps.init())
+    .pipe(sass().on('error', sass.logError))
+    .pipe(postcss(_processors))
+    .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest(dist));
+});
+
+//compile sass and replace tc_dev, src to tc_idc
+gulp.task('sass-build', function () {
+  runSequence('sass:build', 'replace');
 });
 
 // Clean output directory

@@ -1,47 +1,22 @@
-import { createStore, applyMiddleware } from 'redux';
+import { createStore } from 'redux';
 import reducer from '../reducer/reducer';
-import thunk from 'redux-thunk';
-import { getConfig } from '../action/config';
+import { loadState, saveState } from '../action/task/localStorage';
+import throttle from 'lodash/throttle';
 
-//
-// export default createStore(reducer);
-// import {compose, createStore, applyMiddleware } from 'redux';
-// import thunk from 'redux-thunk';
-// import {devTools} from 'redux-devtools';
+const persistedState = loadState();
+const persistedListsState = loadState('lists');
 
-// export default function store(initialState) {
-//   let middlewares = [
-//     applyMiddleware(thunk),
-//     devTools(),
-//   ];
-
-//   const store = compose(...middlewares)(createStore);
-
-//   return store(reducer, initialState);
-// }
-
-const data = getConfig('config');
-
-/* response middleware */
-const responseMiddleware = store => next => action => {
-  const { type, ...rest } = action;
-
-  if (type !== 'DATA_REQUEST') return next(action);
-
-  next(action);
-  setTimeout(() => {
-    next({
-      ...rest,
-      type: 'DATA_RESPONSE',
-      res: {
-        data: data
-      }
-    });
-  }, 700);
-};
-
-/* create store */
 const store = createStore(
   reducer,
-  applyMiddleware(responseMiddleware)
+  {
+    setting: persistedState,
+    lists: persistedListsState
+  }
 );
+
+store.subscribe(throttle(() => {
+  saveState('lists', store.getState().lists);
+  saveState('setting', store.getState().setting);
+}, 1500));
+
+export default store;

@@ -5,10 +5,9 @@ import { connect } from 'react-redux';
 import OutputFolder from '../task/output-folder';
 import FTP from '../task/ftp';
 import SyncFolder from '../task/sync-folder';
-import { setConfig, getConfig } from '../../action/config';
+import { setConfig } from '../../action/config';
 
-
-const DialogSetting = ({ setting, ftp, toggleSettingsShow, setConfig, getConfig }) => {
+const DialogSetting = ({ setting, toggleSettingsShow, setConfig }) => {
   const actions = [
     <FlatButton
       label="取消"
@@ -20,7 +19,6 @@ const DialogSetting = ({ setting, ftp, toggleSettingsShow, setConfig, getConfig 
       primary={true}
       keyboardFocused={true}
       onClick={() => {
-        getConfig('config');
         setConfig('config', setting);
         toggleSettingsShow(false);
       }}
@@ -48,14 +46,12 @@ const DialogSetting = ({ setting, ftp, toggleSettingsShow, setConfig, getConfig 
 }
 
 const mapStateToProps = states => ({
-  setting: states.setting,
-  ftp: states.setting.get('ftp')
+  setting: states.setting
 });
 
 const mapDispatchToProps = dispatch => ({
   toggleSettingsShow: show => dispatch(toggleSettingsShow(show)),
-  setConfig: (fileName, states) => setConfig(fileName, states),
-  getConfig: fileName => getConfig(fileName)
+  setConfig: (fileName, states) => setConfig(fileName, states)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DialogSetting);
