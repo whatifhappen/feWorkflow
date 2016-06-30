@@ -19,7 +19,7 @@ var gulp = require('gulp'),
 //配置项
 //----------------------------------
 var ignoreFolder = 'less|css|temp|im.*|js|lib*?|inc|psd', //排除路径的文件夹地址;
-  copyFiles = ''; //单个格式：/**/*.ttf, 多个格式: /**/*.+(ttf|wmv);用于fonts，sounds这种后缀名。
+  copyFiles = '/**/*.min.*'; //单个格式：/**/*.ttf, 多个格式: /**/*.+(ttf|wmv);用于fonts，sounds这种后缀名。
 //#配置项
 
 //路径
@@ -381,7 +381,7 @@ gulp.task('less', function () {
 
 //compile less and replace tc_dev, src to tc_idc
 gulp.task('less-build', function () {
-  runSequence('less:build', 'replace');
+  runSequence(['less:build', 'css'], 'replace');
 });
 
 /**
@@ -421,7 +421,7 @@ gulp.task('sass', function () {
 
 //compile sass and replace tc_dev, src to tc_idc
 gulp.task('sass-build', function () {
-  runSequence('sass:build', 'replace');
+  runSequence(['sass:build', 'css'], 'replace');
 });
 
 // Clean output directory
@@ -448,12 +448,27 @@ gulp.task('replace', function () {
  */
 gulp.task('copy', function () {
   var copyToLocation = config.syncFolder[0].location; //复制目的路径，用于复制到jats的svn，填写路径到vd目录即可，例：D:\\Code\\work\\vd_jats\\vd\\, 内层文件结构会自动补全
+  var extension = (function(syncFolderTypes) {
+    console.log('syncFolderTypes', syncFolderTypes);
+    var arr = [];
+
+    syncFolderTypes.filter(function(item) {
+      if (item.defaultChecked === true) {
+        arr.push(item.extension);
+      }
+    });
+
+    return arr.join('|');
+  })(config.syncFolderTypes);
+
+  console.log('extension', extension);
+  console.log('all', dist + '/**/*.+(' + extension + ')');
 
   if (copyToLocation) {
-    return gulp.src(dist + '/**/*.+(css|png|gif|jpg|svg)', {cwd: dist})
+    return gulp.src(dist + '/**/*.+(' + extension + ')', {cwd: dist})
       .pipe(gulp.dest(config.syncFolder[1].location + '/' + path.relative(copyToLocation, dist)));
   } else {
-    alert('请输入目的地路径');
+    console.error('请输入目的地路径');
   }
 });
 

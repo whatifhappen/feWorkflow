@@ -5,7 +5,6 @@ import kill from 'tree-kill';
 import { exec } from 'child_process';
 import { remote } from 'electron';
 import { setSnackbar } from '../../action/snackbar';
-import { getPort, getExternalUrl } from './list-btns-port';
 
 const { dialog } = remote;
 
@@ -13,11 +12,10 @@ const style = {
   margin: '0 4px'
 };
 
-let externalUrl;
-let foundExternalUrl = 0;
 
 const cwd = remote.app.getAppPath();
 let isFirstRun = 1;
+
 const ListBtns = ({ ftpSetting, btns, listId, listLocation, onProcess, cancelBuild, setExternalUrl, setSnackbar }) => (
   <div className="btn-group btn-group__right">
     {
@@ -48,15 +46,6 @@ const ListBtns = ({ ftpSetting, btns, listId, listLocation, onProcess, cancelBui
               });
 
               child.stdout.on('data', data => {
-                if (btn.get('cmd') === 'dev' && !foundExternalUrl) {
-                  externalUrl[i] = getExternalUrl(data.toString());
-
-                  if (externalUrl[i] !== null) {
-                    setExternalUrl(listId, externalUrl[i][0].replace(/External:\s+/g, ''));
-                    foundExternalUrl = 1;
-                  }
-                }
-
                 if (isFirstRun) {
                   onProcess(listId, i, btn.get('text'), child.pid, data.toString());
                   isFirstRun = 0;
@@ -70,7 +59,6 @@ const ListBtns = ({ ftpSetting, btns, listId, listLocation, onProcess, cancelBui
                 cancelBuild(listId, i, btn.get('name'), child.pid, '编译结束', false);
                 setSnackbar('编译结束');
                 console.info('编译结束');
-                externalUrl = null;
                 isFirstRun = 1;
               });
             }

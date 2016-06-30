@@ -21,7 +21,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 //   document.getElementById('container')
 // );
 
-console.log('state', store.getState());
+console.log('state', store.getState().setting.get('syncFolderTypes').toJS());
 render(
   <MuiThemeProvider muiTheme={getMuiTheme()}>
     <Provider store={store}>

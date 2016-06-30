@@ -6,6 +6,7 @@ import OutputFolder from '../task/output-folder';
 import FTP from '../task/ftp';
 import SyncFolder from '../task/sync-folder';
 import { setConfig } from '../../action/config';
+import CssPreprocessor from '../task/css-preprocessor';
 
 const DialogSetting = ({ setting, toggleSettingsShow, setConfig }) => {
   const actions = [
@@ -39,6 +40,7 @@ const DialogSetting = ({ setting, toggleSettingsShow, setConfig }) => {
           <OutputFolder />
           <FTP />
           <SyncFolder />
+          <CssPreprocessor />
         </div>
       </Dialog>
     </div>

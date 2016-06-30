@@ -1,8 +1,9 @@
-import { List, Map } from 'immutable';
+import { Map } from 'immutable';
 import { ftp } from './task/ftp';
 import { syncFolder } from './task/sync-folder';
 import { syncFolderTypes } from './task/sync-folder-types';
 import { outputFolder } from './task/output-folder';
+import { cssPreprocessor } from './task/css-preprocessor';
 
 const initState = new Map({
   showSettings: false,
@@ -10,6 +11,7 @@ const initState = new Map({
   ftp,
   syncFolder,
   syncFolderTypes,
+  cssPreprocessor
 });
 
 export default (state = initState, action) => {
@@ -22,9 +24,10 @@ export default (state = initState, action) => {
       return state.setIn(['ftp', action.index, 'value'], action.value);
     case 'SET_SYNC_FOLDER':
       return state.setIn(['syncFolder', action.index, 'location'], action.location);
-    case 'SET_SYNC_FOLDER_TYPE':
-      return state;
-      // return state.setIn(['syncFolderLoc', action.index, 'location'], action.location)
+    case 'SET_SYNC_FOLDER_TYPES':
+      return state.setIn(['syncFolderTypes', action.index, 'defaultChecked'], action.isChecked);
+    case 'SET_CSS_PROPRECESSOR':
+      return state.set('cssPreprocessor', action.value);
     default:
       return state;
   }
