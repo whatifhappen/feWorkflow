@@ -1,23 +1,23 @@
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
-import { setCssProprecessor } from '../../action/task/css-preprocessor';
+import { setCssPreprocessor } from '../../action/task/css-preprocessor';
 import { connect } from 'react-redux';
 
-const CssPreprocessor = ({ btn, setCssProprecessor }) => (
+const CssPreprocessor = ({ preprocessor, setCssPreprocessor }) => (
   <div className="setting-mod_item">
     <h3 className="setting-mod_title">选择CSS预编译</h3>
     <div className="setting-mod_bd">
       <RadioButtonGroup
         name="preprocessor"
-        defaultSelected="LESS"
-        onChange={(event, value) => setCssProprecessor(value)}
+        defaultSelected={preprocessor}
+        onChange={(event, value) => setCssPreprocessor(value)}
       >
         <RadioButton
           value="less"
-          label="LESS"
+          label="less"
           />
         <RadioButton
           value="sass"
-          label="SASS"
+          label="sass"
           />
       </RadioButtonGroup>
     </div>
@@ -25,12 +25,12 @@ const CssPreprocessor = ({ btn, setCssProprecessor }) => (
 );
 
 const mapStateToProps = state => ({
-  btn: state.setting.get('cssPreprocessor');
+  preprocessor: state.setting.get('cssPreprocessor')
 });
 
 const mapDispatchToProps = dispatch => ({
-  setCssProprecessor(value) {
-    dispatch(setCssProprecessor(value))
+  setCssPreprocessor(value) {
+    dispatch(setCssPreprocessor(value));
   }
 });
 

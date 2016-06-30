@@ -3,7 +3,7 @@ import { ftp } from './task/ftp';
 import { syncFolder } from './task/sync-folder';
 import { syncFolderTypes } from './task/sync-folder-types';
 import { outputFolder } from './task/output-folder';
-import { cssPreprocessor } from './task/css-preprocessor';
+import { cssPreprocessor } from './task/css-Preprocessor';
 
 const initState = new Map({
   showSettings: false,

@@ -13,7 +13,8 @@ var gulp = require('gulp'),
   path = require('path'),
   cached = require('gulp-cached'),
   gulpif = require('gulp-if'),
-  config = require('./config.json');
+  config = require('./config.json'),
+  preprocessor = config.cssPreprocessor;
 
 //
 //配置项
@@ -260,7 +261,7 @@ gulp.task('bs', function () {
 });
 
 gulp.task('sync', ['bs'], function () {
-  gulp.start('less');
+  gulp.start(preprocessor);
 
   if (single) {
     var watchList = paths.images.concat(paths.html);
@@ -449,7 +450,6 @@ gulp.task('replace', function () {
 gulp.task('copy', function () {
   var copyToLocation = config.syncFolder[0].location; //复制目的路径，用于复制到jats的svn，填写路径到vd目录即可，例：D:\\Code\\work\\vd_jats\\vd\\, 内层文件结构会自动补全
   var extension = (function(syncFolderTypes) {
-    console.log('syncFolderTypes', syncFolderTypes);
     var arr = [];
 
     syncFolderTypes.filter(function(item) {
@@ -460,9 +460,6 @@ gulp.task('copy', function () {
 
     return arr.join('|');
   })(config.syncFolderTypes);
-
-  console.log('extension', extension);
-  console.log('all', dist + '/**/*.+(' + extension + ')');
 
   if (copyToLocation) {
     return gulp.src(dist + '/**/*.+(' + extension + ')', {cwd: dist})
@@ -537,5 +534,5 @@ gulp.task('dev', function (cb) {
 
 // Build production files, the default task
 gulp.task('default', ['clean'], function (cb) {
-  runSequence(['script', 'images', 'less:build', 'fileinclude', 'prettify', 'copy:files'], 'replace', cb);
+  runSequence(['script', 'images', preprocessor + ':build', 'fileinclude', 'prettify', 'copy:files'], 'replace', cb);
 });

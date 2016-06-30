@@ -1,2 +1,1 @@
-import { Map } from 'immutable';
-export const cssPreprocessor = 'less';
+export const cssPreprocessor = 'less'
