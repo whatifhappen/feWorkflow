@@ -12,9 +12,7 @@ const style = {
   margin: '0 4px'
 };
 
-
 const cwd = remote.app.getAppPath();
-let isFirstRun = 1;
 
 const ListBtns = ({ ftpSetting, btns, listId, listLocation, onProcess, cancelBuild, setExternalUrl, setSnackbar }) => (
   <div className="btn-group btn-group__right">
@@ -46,11 +44,7 @@ const ListBtns = ({ ftpSetting, btns, listId, listLocation, onProcess, cancelBui
               });
 
               child.stdout.on('data', data => {
-                if (isFirstRun) {
-                  onProcess(listId, i, btn.get('text'), child.pid, data.toString());
-                  isFirstRun = 0;
-                }
-
+                onProcess(listId, i, btn.get('text'), child.pid, data.toString());
                 console.log(data.toString())
               });
 
@@ -59,7 +53,6 @@ const ListBtns = ({ ftpSetting, btns, listId, listLocation, onProcess, cancelBui
                 cancelBuild(listId, i, btn.get('name'), child.pid, '编译结束', false);
                 setSnackbar('编译结束');
                 console.info('编译结束');
-                isFirstRun = 1;
               });
             }
           }}

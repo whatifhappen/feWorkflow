@@ -15,7 +15,8 @@ var gulp = require('gulp'),
   gulpif = require('gulp-if'),
   config = require('./config.json'),
   preprocessor = config.cssPreprocessor || 'less',
-  jsTask = (config.jsMinify ? 'js-min' : 'script') || 'script';
+  jsTask = (config.jsMinify ? 'js-min' : 'script') || 'script',
+  zipTask = (config.zip ? 'zip' : '') || '';
 
 //
 //配置项
@@ -34,6 +35,7 @@ var cwd = process.cwd(),
   workingDir,
   src,
   dist,
+  folderName,
   isLottery,
   lotteryPath;
 
@@ -54,6 +56,7 @@ if (reg(loc.src + '|' + loc.dev + '|' + loc.dist).test(cwd)) {
 }
 
 process.chdir(workingDir);
+folderName = workingDir.match(/[^\/\\]+$/g)[0] || 'project';
 console.log('src:', src);
 console.log('dist:', dist);
 
@@ -129,6 +132,7 @@ gulp.task('js-min', function () {
   return gulp.src([paths.js, '!/**/*.min.js'], {
       base: src
     })
+    .pipe(gulpif(src + '/**/*.min.js', gulp.dest(dist)))
     .pipe(babel())
     .pipe(uglify())
     .pipe(rename({
@@ -434,7 +438,7 @@ gulp.task('clean', del.bind(null, dist + '/**', {
 }));
 
 // Clean dev directory
-gulp.task('clean:dev', del.bind(null, [loc.dev + '/*', loc.dist], {
+gulp.task('clean:dev', del.bind(null, [loc.dev + '/**', loc.dist + '/**'], {
   dot: true
 }));
 
@@ -513,7 +517,7 @@ gulp.task('ftp', function () {
 
 // var ftp = require('gulp-sftp');
 //
-// gulp.task('ftp', function () {
+// gulp.task('ftp', function (cb) {
 //   console.log('config', config);
 // 	return gulp.src(dist + '/**')
 // 		.pipe(ftp({
@@ -532,13 +536,20 @@ gulp.task('ftp', function () {
 // 		}));
 // });
 
+var zip = require('gulp-zip');
+
+gulp.task('zip', function () {
+  return gulp.src(dist + '/**')
+    .pipe(zip(folderName + '.zip'))
+    .pipe(gulp.dest(workingDir));
+});
 
 //dev
 gulp.task('dev', function (cb) {
-  runSequence('clean', [jsTask, 'fileinclude'], 'prettify', 'sync', cb);
+  runSequence('clean', ['script', 'fileinclude'], 'prettify', 'sync', cb);
 });
 
 // Build production files, the default task
 gulp.task('default', ['clean'], function (cb) {
-  runSequence([jsTask, 'images', preprocessor + ':build', 'fileinclude', 'prettify', 'copy:files'], 'replace', cb);
+  runSequence(['script', 'images', preprocessor + ':build', 'fileinclude', 'prettify', 'copy:files'], 'replace', zipTask, cb);
 });
