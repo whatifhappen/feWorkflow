@@ -21,7 +21,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 //   document.getElementById('container')
 // );
 
-console.log('state', store.getState().setting.toJS());
 render(
   <MuiThemeProvider muiTheme={getMuiTheme()}>
     <Provider store={store}>

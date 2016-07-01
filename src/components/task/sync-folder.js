@@ -17,9 +17,7 @@ const SyncFolder = ({ syncFolder, synFolderLoc, synFolderType }) => (
             floatingLabelText={textField.get('label')}
             onBlur={(e) => {
               const value = e.target.value.trim();
-              if (value) {
-                synFolderLoc(i, value);
-              }
+              synFolderLoc(i, value);
             }}
           />
         ))

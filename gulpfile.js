@@ -15,8 +15,8 @@ var gulp = require('gulp'),
   gulpif = require('gulp-if'),
   config = require('./config.json'),
   preprocessor = config.cssPreprocessor || 'less',
-  jsTask = (config.jsMinify ? 'js-min' : 'script') || 'script',
-  zipTask = (config.zip ? 'zip' : '') || '';
+  jsTask = config.jsMinify ? 'js-min' : 'script',
+  zipTask = config.zip ? 'zip' : 'no-zip';
 
 //
 //配置项
@@ -29,8 +29,8 @@ var ignoreFolder = 'less|css|temp|im.*|js|lib*?|inc|psd', //排除路径的文�
 var cwd = process.cwd(),
   loc = {
     src: config.outputFolder[0].value || 'src',
-    dev: config.outputFolder[1].value || 'tc_dev',
-    dist: config.outputFolder[2].value || 'tc_idc'
+    dev: config.outputFolder[1].value || 'dev',
+    dist: config.outputFolder[2].value || 'dist'
   },
   workingDir,
   src,
@@ -261,7 +261,8 @@ gulp.task('bs', function () {
   bs.init(files, {
     server: {
       baseDir: baseUrlLoc
-    }
+    },
+    open: "external"
   });
 });
 
@@ -490,7 +491,19 @@ gulp.task('copy:files', function () {
 var gutil = require('gulp-util');
 var ftp = require('vinyl-ftp');
 
+
 gulp.task('ftp', function () {
+  var unfillFtpFrom = [];
+  config.ftp.filter(function(elem) {
+    if (elem.value === '') {
+      unfillFtpFrom.push(elem.name);
+    }
+  });
+
+  if (unfillFtpFrom.length) {
+    console.error('ftp表单' + unfillFtpFrom.join(', ') + '为空.请先到"设置 -> ftp设置" 填写ftp信息！');
+    return false;
+  }
 
   var conn = ftp.create({
     host: config.ftp[0].value,
@@ -534,13 +547,31 @@ gulp.task('ftp', function () {
 //       }
 // 		}));
 // });
+var usemin = require('gulp-usemin2');
+var htmlmin = require('gulp-htmlmin');
+
+gulp.task('usemin', function () {
+  gulp.src(src + '/**/*.html')
+    .pipe(usemin({
+      cssmin: postcss(processors),
+      htmlmin: htmlmin({
+        collapseWhitespace: true
+      }),
+      jsmin: uglify()
+    }))
+    .pipe(gulp.dest(dist));
+});
 
 var zip = require('gulp-zip');
 
 gulp.task('zip', function () {
-  return gulp.src(dist + '/**')
+  return gulp.src(dist + '/*')
     .pipe(zip(folderName + '.zip'))
     .pipe(gulp.dest(workingDir));
+});
+
+gulp.task('no-zip', function () {
+  return false;
 });
 
 //dev
@@ -550,5 +581,5 @@ gulp.task('dev', function (cb) {
 
 // Build production files, the default task
 gulp.task('default', ['clean'], function (cb) {
-  runSequence([jsTask, 'images', preprocessor + ':build', 'fileinclude', 'prettify', 'copy:files'], 'replace', zipTask, cb);
+  runSequence([jsTask, 'images', preprocessor + ':build', 'fileinclude', 'copy:files'], 'replace', 'usemin', zipTask, cb);
 });
