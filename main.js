@@ -18,8 +18,8 @@ function createWindow() {
   });
 
   // and load the index.html of the app.
-  // mainWindow.loadURL('file://' + __dirname + '/index.html');
-  mainWindow.loadURL('http://localhost:3333/');
+  mainWindow.loadURL('file://' + __dirname + '/index.html');
+  // mainWindow.loadURL('http://localhost:3333/');
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
@@ -29,6 +29,7 @@ function createWindow() {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
+
     mainWindow = null;
   });
 

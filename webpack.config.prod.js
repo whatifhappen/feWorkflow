@@ -11,7 +11,7 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: '/dist/'
   },
-  target: 'node',
+  target: 'atom',
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.DefinePlugin({
@@ -60,18 +60,5 @@ module.exports = {
   },
   resolveLoader: {
     modulesDirectories: ['node_modules', path.join(__dirname, '../node_modules')],
-  },
-  externals: [
-      (function () {
-        var IGNORES = [
-          'electron'
-        ];
-        return function (context, request, callback) {
-          if (IGNORES.indexOf(request) >= 0) {
-            return callback(null, "require('" + request + "')");
-          }
-          return callback();
-        };
-      })()
-    ]
+  }
 };

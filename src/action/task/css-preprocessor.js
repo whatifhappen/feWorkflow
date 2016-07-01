@@ -1,6 +1,6 @@
-export function setCssProprecessor(value) {
+export function setCssPreprocessor(value) {
   return {
-    type: 'SET_CSS_PROPRECESSOR',
+    type: 'SET_CSS_PREPROCESSOR',
     value
   };
 }

@@ -57,6 +57,7 @@
     "gulp-sftp": "^0.1.5",
     "gulp-uglify": "^1.5.3",
     "gulp-watch": "^4.3.6",
+    "gulp-zip": "^3.2.0",
     "imagemin-pngquant": "^5.0.0",
     "less-loader": "^2.2.3",
     "material-ui": "^0.15.0-alpha.2",

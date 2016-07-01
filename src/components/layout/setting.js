@@ -7,6 +7,8 @@ import FTP from '../task/ftp';
 import SyncFolder from '../task/sync-folder';
 import { setConfig } from '../../action/config';
 import CssPreprocessor from '../task/css-preprocessor';
+import Zip from '../task/zip';
+import JsMinify from '../task/js-minify';
 
 const DialogSetting = ({ setting, toggleSettingsShow, setConfig }) => {
   const actions = [
@@ -29,7 +31,7 @@ const DialogSetting = ({ setting, toggleSettingsShow, setConfig }) => {
   return (
     <div>
       <Dialog
-        title="设置(开发中)"
+        title="设置"
         actions={actions}
         modal={false}
         open={setting.get('showSettings')}
@@ -41,6 +43,8 @@ const DialogSetting = ({ setting, toggleSettingsShow, setConfig }) => {
           <FTP />
           <SyncFolder />
           <CssPreprocessor />
+          <JsMinify />
+          <Zip />
         </div>
       </Dialog>
     </div>

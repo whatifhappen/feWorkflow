@@ -14,7 +14,8 @@ var gulp = require('gulp'),
   cached = require('gulp-cached'),
   gulpif = require('gulp-if'),
   config = require('./config.json'),
-  preprocessor = config.cssPreprocessor;
+  preprocessor = config.cssPreprocessor || 'less',
+  jsTask = (config.jsMinify ? 'js-min' : 'script') || 'script';
 
 //
 //配置项
@@ -391,6 +392,8 @@ gulp.task('less-build', function () {
  * @param  {[type]} function     (             [description]
  * @return {[type]}              [description]
  */
+ var sass = require('gulp-sass');
+
 gulp.task('sass:build', function () {
   return gulp.src(paths.sass, {
       base: src
@@ -431,16 +434,19 @@ gulp.task('clean', del.bind(null, dist + '/**', {
 }));
 
 // Clean dev directory
-gulp.task('clean:dev', del.bind(null, ['tc_dev/*', 'dist'], {
+gulp.task('clean:dev', del.bind(null, [loc.dev + '/*', loc.dist], {
   dot: true
 }));
 
 //replace tc_dev & src with tc_idc
 var replace = require('gulp-replace');
+var locationReg = function(loc) {
+  return new RegExp('(\/|\\\\)(' + loc + ')', 'g');
+}
 
 gulp.task('replace', function () {
   gulp.src(dist + '/**/*.+(html|js|css)')
-    .pipe(replace(/(\/|\\)(tc_dev|src)/g, '/tc_idc'))
+    .pipe(replace(locationReg(loc.src + '|' + loc.dev), '/' + loc.dist))
     .pipe(gulp.dest(dist));
 });
 
@@ -529,10 +535,10 @@ gulp.task('ftp', function () {
 
 //dev
 gulp.task('dev', function (cb) {
-  runSequence('clean', ['script', 'fileinclude'], 'prettify', 'sync', cb);
+  runSequence('clean', [jsTask, 'fileinclude'], 'prettify', 'sync', cb);
 });
 
 // Build production files, the default task
 gulp.task('default', ['clean'], function (cb) {
-  runSequence(['script', 'images', preprocessor + ':build', 'fileinclude', 'prettify', 'copy:files'], 'replace', cb);
+  runSequence([jsTask, 'images', preprocessor + ':build', 'fileinclude', 'prettify', 'copy:files'], 'replace', cb);
 });
