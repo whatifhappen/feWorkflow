@@ -483,7 +483,6 @@ gulp.task('copy', function () {
 gulp.task('copy:files', function () {
   if (copyFiles) {
     return gulp.src(src + copyFiles)
-      .pipe(gulpif(development, watch(src + copyFiles)))
       .pipe(gulp.dest(dist));
   }
 });
@@ -551,5 +550,5 @@ gulp.task('dev', function (cb) {
 
 // Build production files, the default task
 gulp.task('default', ['clean'], function (cb) {
-  runSequence(['script', 'images', preprocessor + ':build', 'fileinclude', 'prettify', 'copy:files'], 'replace', zipTask, cb);
+  runSequence([jsTask, 'images', preprocessor + ':build', 'fileinclude', 'prettify', 'copy:files'], 'replace', zipTask, cb);
 });

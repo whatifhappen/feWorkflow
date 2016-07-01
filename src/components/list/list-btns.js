@@ -31,6 +31,7 @@ const ListBtns = ({ ftpSetting, btns, listId, listLocation, onProcess, cancelBui
           onClick={() => {
             if (btn.get('process')) {
               kill(btn.get('pid'));
+              cancelBuild(listId, i, btn.get('name'), child.pid, str, true);
             } else {
               const child = exec(`gulp ${btn.get('cmd')} --cwd ${listLocation} ${btn.get('flag')} --gulpfile ${cwd}/gulpfile.js`,  {cwd});
 
@@ -44,7 +45,7 @@ const ListBtns = ({ ftpSetting, btns, listId, listLocation, onProcess, cancelBui
               });
 
               child.stdout.on('data', data => {
-                onProcess(listId, i, btn.get('text'), child.pid, data.toString());
+                onProcess(listId, i, btn.get('text'), child.pid, data.toString())
                 console.log(data.toString())
               });
 
