@@ -1,3 +1,7 @@
+site: [http://whatifhappen.github.io/GulpUI-WX/](http://whatifhappen.github.io/GulpUI-WX/)
+
+![demo](https://ww2.sinaimg.cn/large/006tNc79gy1fcsh73y5sgg30oq0dyhdw.gif)
+
 ##feWorkflow是什么？
 
 Gulp UI改名feWorkflow.
